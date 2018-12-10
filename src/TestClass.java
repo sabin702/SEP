@@ -10,13 +10,17 @@ public class TestClass
       do {
          System.out.print(date + " ");
          date.nextDay();
-         if (date.dayOfWeek() == "Monday")
-         {
-            weekNumber++;
-            System.out.println();
-            System.out.println(weekNumber);
+ 
+         if(date.getMonth() == 12 && date.getDay() == 31) {
+               if(date.dayOfWeek().equals("Monday") || date.dayOfWeek().equals("Tuesday") || date.dayOfWeek().equals("Wednesday"))
+                  weekNumber = 0; 
          }
+         if (date.dayOfWeek().equals("Monday")) {
+               weekNumber++;
+               System.out.println();
+               System.out.println(weekNumber);
+         } 
          i++;
-      }while(i<30);
+      }while(i<60);
    }
 }

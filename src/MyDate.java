@@ -14,6 +14,7 @@ public class MyDate
    private int day;
    private int month;
    private int year;
+   private int week;
    
    public MyDate(int day, int month, int year) {
       this.day = day;
@@ -60,8 +61,12 @@ public class MyDate
       Calendar calendar = new GregorianCalendar();
       Date currentDate = new Date();
       calendar.setTime(currentDate);
-      int week = calendar.get(Calendar.WEEK_OF_YEAR);
+      week = calendar.get(Calendar.WEEK_OF_YEAR);
       return week;
+   }
+   
+   public void setWeek(int week) {
+      this.week = week;
    }
    
    public static MyDate today() {
@@ -111,14 +116,16 @@ public class MyDate
    }
    
    public String dayOfWeek() {
-      if (month == 1 || month == 2) {
-         month+=12;
-         year-=1;
+      int month1 = month;
+      int year1 = year;
+      if (month1 == 1 || month1 == 2) {
+         month1+=12;
+         year1-=1;
       }
       int dayOfWeek;
-      int yearOfTheCentury = year % 100;
-      int century = year / 100;
-      dayOfWeek = (day+(13*(month+1))/5+ yearOfTheCentury + (yearOfTheCentury/4) + (century/4) + 5*century)%7;
+      int yearOfTheCentury = year1 % 100;
+      int century = year1 / 100;
+      dayOfWeek = (day+(13*(month1+1))/5+ yearOfTheCentury + (yearOfTheCentury/4) + (century/4) + 5*century)%7;
       switch(dayOfWeek) {
          case 0:
          return "Saturday";
@@ -151,7 +158,6 @@ public class MyDate
       day++;
       if(day > daysInMonth()){
          while(day > daysInMonth()){
-            
             setDay(day - daysInMonth());
             }
          setMonth(month + 1);
