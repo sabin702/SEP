@@ -56,4 +56,8 @@ public class Worker
       else 
          return false;
    }
+   
+   public Worker copy() {
+      return new Worker(name, number, initials);
+   }
 }
