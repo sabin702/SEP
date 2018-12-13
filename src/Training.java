@@ -1,6 +1,7 @@
-import javafx.concurrent.Worker;
+import java.io.Serializable;
 
-public class Training
+
+public class Training implements Serializable
 {
    private String trainingStatus;
    private Analysis analysis;
@@ -13,9 +14,20 @@ public class Training
       this.worker = worker;
    }
 
+
    public String getTrainingStatus()
    {
       return trainingStatus;
+   }
+
+   public Analysis getAnalysis()
+   {
+      return analysis;
+   }
+
+   public Worker getWorker()
+   {
+      return worker;
    }
 
    public void setTrainingStatus(String trainingStatus)

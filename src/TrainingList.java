@@ -13,10 +13,18 @@ public class TrainingList
    {
       training.add(index);
    }
-
-   public void removeTraining(Training index)
+   public int getSize()
    {
-      training.remove(index);
+      return training.size();
+   }
+   public Training getTraining(int index)
+   {
+      return training.get(index);
+   }
+
+   public void removeTraining(Training train)
+   {
+      training.remove(train);
    }
 
    public void sortByName()

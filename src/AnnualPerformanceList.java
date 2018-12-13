@@ -1,37 +1,55 @@
 import java.util.ArrayList;
+
 public class AnnualPerformanceList
 {
 
-   private ArrayList <AnnualPerformance> comments;    
+   private ArrayList<AnnualPerformance> comments;
+
    /*
-    * A contructor which takes elements of type AnnualPerformance   
+    * A contructor which takes elements of type AnnualPerformance
     */
    public AnnualPerformanceList()
    {
-      comments = new ArrayList<AnnualPerformance> (comments);   
+      comments = new ArrayList<AnnualPerformance>(comments);
    }
+
    /**
-    *  A method that adds an employee's preference to the list of preferences or perfomanceList
-    * @param annualPerformance the employee's preference to add to the list
+    * A method that adds an employee's preference to the list of preferences or
+    * perfomanceList
+    * 
+    * @param annualPerformance
+    *           the employee's preference to add to the list
     */
    public void addAnnualPerformance(AnnualPerformance annualPerformance)
    {
       comments.add(annualPerformance);
    }
+
    /**
-    * 
     * @param annualPerformance
     */
-   public void removeAnnualPerformance (AnnualPerformance annualPerformance)
+   
+   public void removeAnnualPerformance(AnnualPerformance annual)
    {
-      comments.remove(annualPerformance);   
+      comments.remove(annual);
    }
+
    public void sortByName()
    {
-      
+
    }
-   
-   public boolean equals (Object obj)
+
+   public int getSize()
+   {
+      return comments.size();
+   }
+
+   public AnnualPerformance getAnnualPerformance(int index)
+   {
+      return comments.get(index);
+   }
+
+   public boolean equals(Object obj)
    {
       if (!(obj instanceof AnnualPerformanceList))
       {
@@ -39,15 +57,14 @@ public class AnnualPerformanceList
       }
       AnnualPerformanceList temp = (AnnualPerformanceList) obj;
       return temp.comments.equals(comments);
-      
+
    }
+
    public String toString()
-    {
+   {
       String str = "";
-      for (int i=0; i<comments.size();i++)
-         str+=comments.get(i);
+      for (int i = 0; i < comments.size(); i++)
+         str += comments.get(i);
       return str;
-    }
+   }
 }
-
-

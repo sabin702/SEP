@@ -1,4 +1,5 @@
-public class AnnualPerformance
+import java.io.Serializable;
+public class AnnualPerformance implements Serializable
 {
    private String comment;
    private Worker worker;
@@ -14,6 +15,16 @@ public class AnnualPerformance
       return comment;   
    }
    
+   public Worker getWorker()
+   {
+      return worker;
+   }
+
+   public void setWorker(Worker worker)
+   {
+      this.worker = worker;
+   }
+
    public void setComment(String comment)
    {
       this.comment=comment;

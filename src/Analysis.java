@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Analysis
+public class Analysis implements Serializable
 {
    private String analysisType;
    private String matrix;
