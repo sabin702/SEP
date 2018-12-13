@@ -1,11 +1,12 @@
+import java.io.Serializable;
 
-public class Worker
+public class Worker implements Serializable
 {
    private String name;
-   private int number;
+   private String number;
    private String initials;
    
-   public Worker(String name, int number, String initials)
+   public Worker(String name, String number, String initials)
    {
       this.setName(name);
       this.setNumber(number);
@@ -22,12 +23,12 @@ public class Worker
       this.name = name;
    }
 
-   public int getNumber()
+   public String getNumber()
    {
       return number;
    }
 
-   public void setNumber(int number)
+   public void setNumber(String number)
    {
       this.number = number;
    }
