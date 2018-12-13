@@ -144,18 +144,17 @@ public class EditAnalysisPanel extends JPanel
       {
          if (e.getSource() == updateButton)
          {
-            String firstName = firstNameField.getText();
-            String lastName = lastNameField.getText();
-            String country = countryField.getText();
+            String analysis = analysisField.getText();
+            String matrix = matrixField.getText();
 
-            if (country.equals(""))
+            if (matrix.equals(""))
             {
-               country = "?";
+               matrix = "?";
             }
 
-            adapter.changeCountry(firstName, lastName, country);
+            adapter.changeMatrixName(analysis, matrix);
             updateStudentList();
-            countryField.setText("");
+            matrixField.setText("");
          }
       }
    }
@@ -164,13 +163,13 @@ public class EditAnalysisPanel extends JPanel
    {
       public void valueChanged(ListSelectionEvent e) 
       {
-         if (e.getSource() == studentList)
+         if (e.getSource() == analysisList)
          {
-            if (studentList.getSelectedValue() instanceof Student)
+            if (analysisList.getSelectedValue() instanceof Analysis)
             {
-               Student temp = (Student)studentList.getSelectedValue();
-               firstNameField.setText(temp.getFirstName());
-               lastNameField.setText(temp.getLastName());
+               Analysis temp = (Analysis)analysisList.getSelectedValue();
+               analysisField.setText(temp.getAnalysisType());
+               //lastNameField.setText(temp.getLastName());
             }
          }
       }
