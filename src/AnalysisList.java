@@ -15,9 +15,9 @@ public class AnalysisList
       analysis.add(index);
    }
 
-   public void removeAnalysis(int index)
+   public void removeAnalysis(Analysis anal)
    {
-      analysis.remove(index);
+      analysis.remove(anal);
    }
 
    public int getSize()

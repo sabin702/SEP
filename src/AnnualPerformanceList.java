@@ -29,9 +29,9 @@ public class AnnualPerformanceList
     * @param annualPerformance
     */
    
-   public void removeAnnualPerformance(int index)
+   public void removeAnnualPerformance(AnnualPerformance annual)
    {
-      comments.remove(index);
+      comments.remove(annual);
    }
 
    public void sortByName()

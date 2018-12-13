@@ -11,6 +11,7 @@ public class AnnualPerformanceAdapter
       mifo = new MyFileIO();
       this.fileName = fileName;
    }
+
    public AnnualPerformanceList getAllAnnualPerformance()
    {
       AnnualPerformanceList annual = new AnnualPerformanceList();
@@ -71,23 +72,16 @@ public class AnnualPerformanceAdapter
 
    }
 
-
-   public void deleteAnnualPerformance(String str, Worker worker)
+   public void deleteTraining(String str, Worker worker)
    {
       AnnualPerformanceList annuals = getAllAnnualPerformance();
+      AnnualPerformance comment = new AnnualPerformance(str, worker);
 
       for (int i = 0; i < annuals.getSize(); i++)
       {
-         AnnualPerformance comment = annuals.getAnnualPerformance(i);
-
-         if (comment.getComment().equals(str)
-               && comment.getWorker().equals(worker))
-         {
-            annuals.removeAnnualPerformance(i);
-         }
+         annuals.removeAnnualPerformance(comment);
       }
 
       saveAnnualPerformance(annuals);
-      
    }
 }

@@ -93,19 +93,13 @@ public class AnalysisFileAdapter
    public void deleteAnalysis(String analysisType, String matrix)
    {
       AnalysisList analyzes = getAllAnalysis();
+      Analysis analysis = new Analysis(analysisType, matrix);
 
       for (int i = 0; i < analyzes.getSize(); i++)
       {
-         Analysis analysis = analyzes.getAnalysis(i);
-
-         if (analysis.getAnalysisType().equals(analysisType)
-               && analysis.getMatrix().equals(matrix))
-         {
-            analyzes.removeAnalysis(i);
-         }
+         analyzes.removeAnalysis(analysis);
       }
 
       saveAnalysis(analyzes);
-      
    }
 }
