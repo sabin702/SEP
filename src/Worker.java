@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Worker
+public class Worker implements Serializable
 {
    private String name;
    private int number;

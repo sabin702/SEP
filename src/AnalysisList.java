@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 public class AnalysisList
 {
 
@@ -16,12 +15,20 @@ public class AnalysisList
       analysis.add(index);
    }
 
-   public void removeAnalysis(Analysis index)
+   public void removeAnalysis(int index)
    {
       analysis.remove(index);
    }
 
-  
+   public int getSize()
+   {
+      return analysis.size();
+   }
+
+   public Analysis getAnalysis(int index)
+   {
+      return analysis.get(index);
+   }
 
    public String toString()
    {
