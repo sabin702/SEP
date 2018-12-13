@@ -3,51 +3,76 @@ import java.util.ArrayList;
 public class AnalysisList
 {
 
-   ArrayList<Analysis> analysis;
+   ArrayList<Analysis> analysises;
 
    public AnalysisList()
    {
-      analysis = new ArrayList<Analysis>();
+      analysises = new ArrayList<Analysis>();
    }
 
    public void addAnalysis(Analysis index)
    {
-      analysis.add(index);
+      analysises.add(index);
    }
 
    public void removeAnalysis(Analysis anal)
    {
-      analysis.remove(anal);
+      analysises.remove(anal);
    }
 
-   public int getSize()
+   public Analysis get(int index)
    {
-      return analysis.size();
+      return analysises.get(index);
    }
-
-   public Analysis getAnalysis(int index)
+   
+   /**
+    * Gets a Student object with the given first name and last name from the list.
+    * @param firstName the first name of the Student object
+    * @param lastName the last name of the Student object
+    * @return the Student object with the given first name and last name if one exists, else null
+    */
+   public Analysis get(String analysis)
    {
-      return analysis.get(index);
+      for(int i = 0; i<analysises.size(); i++)
+      {
+         Analysis temp = analysises.get(i);
+         
+         if(temp.getAnalysisType().equals(analysis))
+         {
+            return temp;
+         }
+      }
+      
+      return null;
+   }
+   
+   /**
+    * Gets how many Student objects are in the list.
+    * @return the number of Student objects in the list
+    */
+   public int size()
+   {
+      return analysises.size();
    }
 
    public String toString()
    {
-      return analysis.toString();
+      return analysises.toString();
    }
 
    public boolean equals(Object obj)
    {
       AnalysisList other = (AnalysisList) obj;
 
-      if (other.analysis.size() != this.analysis.size())
+      if (other.analysises.size() != this.analysises.size())
       {
          return false;
       }
       else
       {
-         for (int i = 0; i < this.analysis.size(); i++)
+         for (int i = 0; i < this.analysises.size(); i++)
          {
-            if ((!other.analysis.get(i).equals(this.analysis.get(i))))
+            if ((!other.analysises.get(i).equals(this.analysises.get(i))))
             {
                return false;
             }

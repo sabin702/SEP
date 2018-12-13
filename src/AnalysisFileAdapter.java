@@ -57,9 +57,9 @@ public class AnalysisFileAdapter
    {
       AnalysisList analyzes = getAllAnalysis();
 
-      for (int i = 0; i < analyzes.getSize(); i++)
+      for (int i = 0; i < analyzes.size(); i++)
       {
-         Analysis analysis = analyzes.getAnalysis(i);
+         Analysis analysis = analyzes.get(i);
 
          if (analysis.getAnalysisType().equals(analysisType)
                && analysis.getMatrix().equals(matrix))
@@ -76,9 +76,9 @@ public class AnalysisFileAdapter
    {
       AnalysisList analyzes = getAllAnalysis();
 
-      for (int i = 0; i < analyzes.getSize(); i++)
+      for (int i = 0; i < analyzes.size(); i++)
       {
-         Analysis analysis = analyzes.getAnalysis(i);
+         Analysis analysis = analyzes.get(i);
 
          if (analysis.getAnalysisType().equals(analysisType)
                && analysis.getMatrix().equals(matrix))
@@ -95,7 +95,7 @@ public class AnalysisFileAdapter
       AnalysisList analyzes = getAllAnalysis();
       Analysis analysis = new Analysis(analysisType, matrix);
 
-      for (int i = 0; i < analyzes.getSize(); i++)
+      for (int i = 0; i < analyzes.size(); i++)
       {
          analyzes.removeAnalysis(analysis);
       }
