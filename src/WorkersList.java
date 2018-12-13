@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class WorkersList
+public class WorkersList implements Serializable
 {
    private ArrayList<Worker> workers;
    
@@ -24,9 +25,67 @@ public class WorkersList
       
    }
    
+   public Worker get(String name,String number,String intials)
+   {
+      for (int i=0; i<workers.size();i++)
+      {
+         Worker temp= workers.get(i);
+         
+         if (temp.getName().equals(name) && temp.getNumber().equals(number) && temp.getInitials().equals(intials))
+         {
+            return temp;
+         }
+      }
+      return null;
+   }
+   
+   public int size()
+   {
+      return workers.size();
+   }
+   
+   public int getIndex(String name, String number, String initials)
+   {
+      for(int i = 0; i<workers.size(); i++)
+      {
+         Worker temp = workers.get(i);
+         
+         if(temp.getName().equals(name) && temp.getNumber().equals(number) && temp.getInitials().equals(initials))
+         {
+            return i;
+         }
+      }  
+      return -1;
+   }
+   
+   public Worker get(int index)
+   {
+      if(index<workers.size())
+      {
+         return workers.get(index);
+      }
+      else
+      {
+         return null;
+      }
+   }
+   
+   public void set(Worker worker, int index)
+   {
+      workers.set(index, worker);
+   }
+   
    public String toString()
    {
-      return workers.toString();
+      String returnString="";
+      
+      for (int i=0;i <workers.size();i++)
+      {
+         Worker temp = workers.get(i);
+         
+         returnString+= temp+"\n";
+      }
+      return returnString;
    }
    
    public boolean equals(Object obj)
