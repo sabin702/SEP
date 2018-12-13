@@ -15,11 +15,11 @@ public class WorkerFileAdapter
    
    public WorkersList getAllWorkers()
    {
-      WorkersList workers=new WorkersList();
+      WorkersList workers = new WorkersList();
       
       try
       {
-         workers= (WorkersList)mifo.readObjectFromFile(fileName);
+         workers = (WorkersList)mifo.readObjectFromFile(fileName);
       }
       
       catch (FileNotFoundException e)
@@ -29,6 +29,7 @@ public class WorkerFileAdapter
       catch (IOException e)
       {
          System.out.println("IO error reading files");
+         e.printStackTrace();
       }
       catch (ClassNotFoundException e)
       {
@@ -54,8 +55,34 @@ public class WorkerFileAdapter
       }
    }
    
-   public void changeWorkerName() {
-      
+   public void changeInformation(String name,String number, String initials)
+   {
+      WorkersList workers= getAllWorkers();
+
+      for (int i = 0; i < workers.size(); i++)
+      {
+         Worker worker = workers.get(i);
+
+            worker.setInitials(initials);
+            worker.setName(name);
+            worker.setNumber(number);
+      }
+
+      saveWorkers(workers);
    }
+   
+   public void DeleteWorker(String name, String number, String initials)
+   {
+      WorkersList workers= getAllWorkers();
+      Worker worker= new Worker(name,number,initials);
+      
+      for (int i=0;i<workers.size();i++)
+      {
+         workers.removeWorker(worker);
+      }
+      
+      saveWorkers(workers);
+   }
+   
    
 }
