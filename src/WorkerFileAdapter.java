@@ -54,6 +54,8 @@ public class WorkerFileAdapter
       }
    }
    
-   public void changeWorkerName()
+   public void changeWorkerName() {
+      
+   }
    
 }
