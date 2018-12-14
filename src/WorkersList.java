@@ -14,7 +14,7 @@ public class WorkersList implements Serializable
    {
       workers.add(worker);
    }
-   
+     
    public void removeWorker(Worker worker)
    {
       workers.remove(worker);
@@ -33,7 +33,7 @@ public class WorkersList implements Serializable
          
          if (temp.getName().equals(name) && temp.getNumber().equals(number) && temp.getInitials().equals(intials))
          {
-            return temp;
+            return workers.get(i);
          }
       }
       return null;

@@ -45,7 +45,7 @@ public class Worker implements Serializable
    
    public String toString()
    {
-      return this.name + this.number + this.initials;
+      return this.name +" "+ this.number +" "+ this.initials;
    }
    
    public boolean equals(Object obj)

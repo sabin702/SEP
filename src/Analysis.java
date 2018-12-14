@@ -43,7 +43,7 @@ public class Analysis implements Serializable
 
    public String toString()
    {
-      return "Analysis Type: " + analysisType + "\n" + "Matrix: " + matrix;
+      return analysisType + " (" + matrix+")";
    }
 
 }

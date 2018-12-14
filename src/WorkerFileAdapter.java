@@ -59,30 +59,39 @@ public class WorkerFileAdapter
    {
       WorkersList workers= getAllWorkers();
 
-      for (int i = 0; i < workers.size(); i++)
+      for (int i = 0;i<workers.size();i++)
       {
-         Worker worker = workers.get(i);
-
-            worker.setInitials(initials);
-            worker.setName(name);
-            worker.setNumber(number);
+         if (workers.get(i).getNumber().equals(number))
+         {
+            workers.get(i).setInitials(initials);
+            workers.get(i).setName(name);
+            
+         }
       }
-
+            
       saveWorkers(workers);
    }
    
-   public void DeleteWorker(String name, String number, String initials)
+   public void deleteWorker(String name, String number, String initials)
    {
       WorkersList workers= getAllWorkers();
-      Worker worker= new Worker(name,number,initials);
       
-      for (int i=0;i<workers.size();i++)
-      {
-         workers.removeWorker(worker);
-      }
+      int i=workers.getIndex(name, number, initials);
+      workers.get(i).setInitials("");
+      workers.get(i).setName("");
+      workers.get(i).setNumber("");
+      
+      workers.removeWorker(new Worker("","",""));
       
       saveWorkers(workers);
    }
    
-   
+   public void addWorker(String name, String number, String initials)
+   {
+      WorkersList workers= getAllWorkers();
+      
+      workers.addWorker(new Worker(name, number, initials));
+      
+      saveWorkers(workers);
+   }
 }

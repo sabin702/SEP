@@ -38,8 +38,6 @@ public class EditAnalysisPanel extends JPanel
    private DefaultListModel<Analysis> listModel;
    private JScrollPane allAnalysisScrollPane;
    
-   //private ImageIcon logoIcon;
-   //private JLabel logoLabel;
    
    /**
     * Constructor initializing the GUI components
@@ -57,7 +55,7 @@ public class EditAnalysisPanel extends JPanel
       analysisField = new JTextField(15);
       analysisField.setEditable(false);
 
-      matrixLabel = new JLabel("Matrix:          ");
+      matrixLabel = new JLabel("Matrix:        ");
       matrixField = new JTextField(15);
 
       updateButton = new JButton("Update");
@@ -89,24 +87,8 @@ public class EditAnalysisPanel extends JPanel
             
       add(comboPanel);
       comboPanel.setPreferredSize(new Dimension(260, 300));
-                
-      //logoIcon = new ImageIcon("img/vialogoah.gif");
-      //logoLabel = new JLabel();
-      //logoLabel.setIcon(logoIcon);
-      
-      //add(logoLabel);
-      //logoLabel.setPreferredSize(new Dimension(145, 65));
    }
    
-   /**
-    * Enables or disables editing of firstNameField and lastNameField.
-    * @param bool if true then the fields will be editable, if false then they will not
-    */
-   public void changeEditableState(boolean bool)
-   {
-      analysisField.setEditable(bool);
-      //lastNameField.setEditable(bool);
-   }
    
    /**
     * Updates the analysisList JList with information from the analyses file  
