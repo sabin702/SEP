@@ -46,7 +46,7 @@ public class MainGUI extends JFrame
    {
       super("SEP GUI Test - 1");
 
-      adapter = new AnalysisFileAdapter("students.bin");
+      adapter = new AnalysisFileAdapter("analysis.bin");
 
       buttonListener = new MyButtonListener();
       tabListener = new MyTabListener();
@@ -101,8 +101,8 @@ public class MainGUI extends JFrame
    
    /*
     * Inner action listener class 
-    * @author Allan Henriksen
-    * @version 4.0
+    * @author Sabin Sirbu
+    * @version 1.0
     */
    private class MyButtonListener implements ActionListener
    {
@@ -156,8 +156,8 @@ public class MainGUI extends JFrame
 
    /*
     * Inner change listener class 
-    * @author Allan Henriksen
-    * @version 4.0
+    * @author Sabin Sirbu
+    * @version 1.0
     */
    private class MyTabListener implements ChangeListener
    {
@@ -170,7 +170,7 @@ public class MainGUI extends JFrame
  */
          if(((JTabbedPane)e.getSource()).getSelectedIndex()==0)
          {
-            editAnalysisPanel.updateStudentList();
+            editAnalysisPanel.updateAnalysisList();
          }
       }
    }

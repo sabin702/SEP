@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class AnalysisList
+public class AnalysisList implements Serializable
 {
 
    ArrayList<Analysis> analysises;
@@ -13,6 +14,9 @@ public class AnalysisList
    public void addAnalysis(Analysis index)
    {
       analysises.add(index);
+   }
+   public void add(Analysis analysis) {
+      analysises.add(analysis);
    }
 
    public void removeAnalysis(Analysis anal)

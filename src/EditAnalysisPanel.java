@@ -38,12 +38,12 @@ public class EditAnalysisPanel extends JPanel
    private DefaultListModel<Analysis> listModel;
    private JScrollPane allAnalysisScrollPane;
    
-   private ImageIcon logoIcon;
-   private JLabel logoLabel;
+   //private ImageIcon logoIcon;
+   //private JLabel logoLabel;
    
    /**
     * Constructor initializing the GUI components
-    * @param adapter StudentFileAdapter object used for retrieving and storing student information
+    * @param adapter AnalysisFileAdapter object used for retrieving and storing analysis information
     */
    public EditAnalysisPanel(AnalysisFileAdapter adapter)
    {
@@ -90,12 +90,12 @@ public class EditAnalysisPanel extends JPanel
       add(comboPanel);
       comboPanel.setPreferredSize(new Dimension(260, 300));
                 
-      logoIcon = new ImageIcon("img/vialogoah.gif");
-      logoLabel = new JLabel();
-      logoLabel.setIcon(logoIcon);
+      //logoIcon = new ImageIcon("img/vialogoah.gif");
+      //logoLabel = new JLabel();
+      //logoLabel.setIcon(logoIcon);
       
-      add(logoLabel);
-      logoLabel.setPreferredSize(new Dimension(145, 65));
+      //add(logoLabel);
+      //logoLabel.setPreferredSize(new Dimension(145, 65));
    }
    
    /**
@@ -109,9 +109,9 @@ public class EditAnalysisPanel extends JPanel
    }
    
    /**
-    * Updates the studentList JList with information from the students file  
+    * Updates the analysisList JList with information from the analyses file  
     */
-  public void updateStudentList()
+  public void updateAnalysisList()
    {
       int currentIndex = analysisList.getSelectedIndex();
       
@@ -135,8 +135,8 @@ public class EditAnalysisPanel extends JPanel
 
    /*
     * Inner action listener class 
-    * @author Allan Henriksen
-    * @version 3.0
+    * @author Sabin Sirbu
+    * @version 1.0
     */
    private class MyButtonListener implements ActionListener
    {
@@ -153,7 +153,7 @@ public class EditAnalysisPanel extends JPanel
             }
 
             adapter.changeMatrixName(analysis, matrix);
-            updateStudentList();
+            updateAnalysisList();
             matrixField.setText("");
          }
       }
