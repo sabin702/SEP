@@ -135,5 +135,47 @@ public class LoadData
       
       System.out.println("Done");
       System.out.println(trainings);
+      
+      ///ANNUALPREFRENCE
+      AnnualPerformanceList annuals = new AnnualPerformanceList();
+      String[] annualperformance = null;
+      try
+      {
+         annualperformance = mtfio.readArrayFromFile("annualPerformance.txt");
+                      
+         for(int i = 0; i<annualperformance.length; i++)
+         {
+            String temp = annualperformance[i];
+            String[] tempArr = temp.split(",");
+         
+            String name = tempArr[0];
+            String number = tempArr[1];
+            String initials = tempArr[2];
+            
+            String prefrence="";
+                  
+            annuals.addAnnualPerformance(new AnnualPerformance(prefrence, new Worker(name,number,initials)));
+         }
+         
+      }
+      catch (FileNotFoundException e)
+      {
+         System.out.println("File was not found, or could not be opened");
+      }     
+      try
+      {
+         mfio.writeToFile("annuals.bin", annuals);
+      }
+      
+      catch (FileNotFoundException e)
+      {
+         System.out.println("Error opening file ");
+      }
+      catch (IOException e)
+      {
+         System.out.println("IO Error writing to file ");
+      }
+      
+      System.out.println("Done");
    }
 }
