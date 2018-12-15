@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Savepoint;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -31,7 +32,9 @@ public class EditAnalysisPanel extends JPanel
    private JTextField analysisField;
    private JTextField matrixField;
    
-   private JButton updateButton;
+   private JButton clearButton;
+   private JButton addButton;
+   private JButton deleteButton;
    
    private JPanel comboPanel;
    private JList<Analysis> analysisList;
@@ -57,9 +60,16 @@ public class EditAnalysisPanel extends JPanel
 
       matrixLabel = new JLabel("Matrix:        ");
       matrixField = new JTextField(15);
+      matrixField.setEditable(false);
 
-      updateButton = new JButton("Update");
-      updateButton.addActionListener(buttonListener);
+      clearButton = new JButton("Clear");
+      clearButton.addActionListener(buttonListener);
+      
+      addButton = new JButton("Add");
+      addButton.addActionListener(buttonListener);
+      
+      deleteButton = new JButton("Delete");
+      deleteButton.addActionListener(buttonListener);
 
       inputPanel.add(analysisLabel);
       inputPanel.add(analysisField);
@@ -67,7 +77,9 @@ public class EditAnalysisPanel extends JPanel
       inputPanel.add(matrixLabel);
       inputPanel.add(matrixField);
 
-      inputPanel.add(updateButton);
+      inputPanel.add(clearButton);
+      inputPanel.add(addButton);
+      inputPanel.add(deleteButton);
       
       add(inputPanel);
       inputPanel.setPreferredSize(new Dimension(280, 300));
@@ -124,19 +136,41 @@ public class EditAnalysisPanel extends JPanel
    {
       public void actionPerformed(ActionEvent e)
       {
-         if (e.getSource() == updateButton)
+         if (e.getSource() == clearButton)
          {
-            String analysis = analysisField.getText();
-            String matrix = matrixField.getText();
-
-            if (matrix.equals(""))
-            {
-               matrix = "?";
-            }
-
-            adapter.changeMatrixName(analysis, matrix);
-            updateAnalysisList();
+            analysisField.setText("");
             matrixField.setText("");
+            analysisField.setEditable(true);
+            matrixField.setEditable(true);
+         }
+         if (e.getSource() == addButton)
+         {
+            String analysis=analysisField.getText();
+            String matrix=matrixField.getText();
+            
+            adapter.addAnalysis(analysis, matrix);
+            
+            updateAnalysisList();
+            
+            analysisField.setEditable(false);
+            matrixField.setEditable(false);
+         }
+         if (e.getSource()== deleteButton)
+         {
+            analysisField.setEditable(true);
+            matrixField.setEditable(true); 
+            
+            String analysis = analysisField.getText();
+            String matrix= matrixField.getText();
+            
+            adapter.deleteAnalysis(analysis, matrix);
+                     
+            updateAnalysisList();
+            
+            analysisField.setText("");
+            matrixField.setText("");
+            analysisField.setEditable(false);
+            matrixField.setEditable(false);
          }
       }
    }
@@ -151,7 +185,7 @@ public class EditAnalysisPanel extends JPanel
             {
                Analysis temp = (Analysis)analysisList.getSelectedValue();
                analysisField.setText(temp.getAnalysisType());
-               //lastNameField.setText(temp.getLastName());
+               matrixField.setText(temp.getMatrix());
             }
          }
       }

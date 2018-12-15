@@ -1,3 +1,4 @@
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -23,7 +24,21 @@ public class AnalysisList implements Serializable
    {
       analysises.remove(anal);
    }
-
+   
+   public int getIndex(String analname, String matrix)
+   {
+      for(int i = 0; i<analysises.size(); i++)
+      {
+         Analysis temp = analysises.get(i);
+         
+         if(temp.getAnalysisType().equals(analname) && temp.getMatrix().equals(matrix))
+         {
+            return i;
+         }
+      }  
+      return -1;
+   }
+   
    public Analysis get(int index)
    {
       return analysises.get(index);
