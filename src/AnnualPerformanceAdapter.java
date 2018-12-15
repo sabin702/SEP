@@ -36,7 +36,33 @@ public class AnnualPerformanceAdapter
 
       return annual;
    }
-
+   
+   public WorkersList getAllWorkers()
+   {
+      WorkersList workers = new WorkersList();
+      
+      try
+      {
+         workers = (WorkersList)mifo.readObjectFromFile(fileName);
+      }
+      
+      catch (FileNotFoundException e)
+      {
+         System.out.println("File not found");
+      }
+      catch (IOException e)
+      {
+         System.out.println("IO error reading files");
+         e.printStackTrace();
+      }
+      catch (ClassNotFoundException e)
+      {
+         System.out.println("Class not found");
+      }
+      
+      return workers;
+   }
+   
    public void saveAnnualPerformance(AnnualPerformanceList annual)
    {
       try
@@ -53,26 +79,29 @@ public class AnnualPerformanceAdapter
       }
    }
 
-   public void changeAnnualPerformanceComment(String str, Worker worker)
+   public void changeAnnualPerformanceComment(String str, String name , String number, String initials)
    {
       AnnualPerformanceList annuals = getAllAnnualPerformance();
-
-      for (int i = 0; i < annuals.getSize(); i++)
+      
+      for (int i =0;i<annuals.getSize();i++)
       {
-         AnnualPerformance comment = annuals.getAnnualPerformance(i);
-
-         if (comment.getComment().equals(str)
-               && comment.getWorker().equals(worker))
-         {
+         AnnualPerformance comment= annuals.getAnnualPerformance(i);
+         if (comment.getWorker().getName().equals(name) 
+               && comment.getWorker().getInitials().equals(initials)
+               && comment.getWorker().getNumber().equals(number))
+         { 
             comment.setComment(str);
          }
+         else 
+            comment.setComment(null);
       }
+      
 
       saveAnnualPerformance(annuals);
 
    }
 
-   public void deleteTraining(String str, Worker worker)
+   public void deleteComment(String str, Worker worker)
    {
       AnnualPerformanceList annuals = getAllAnnualPerformance();
       AnnualPerformance comment = new AnnualPerformance(str, worker);
@@ -82,6 +111,15 @@ public class AnnualPerformanceAdapter
          annuals.removeAnnualPerformance(comment);
       }
 
+      saveAnnualPerformance(annuals);
+   }
+   
+   public void addPerformance(Worker worker, String comment)
+   {
+      AnnualPerformanceList annuals= getAllAnnualPerformance();
+      
+      annuals.addAnnualPerformance(new AnnualPerformance(comment, worker));
+      
       saveAnnualPerformance(annuals);
    }
 }
