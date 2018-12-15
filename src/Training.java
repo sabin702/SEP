@@ -1,6 +1,5 @@
 import java.io.Serializable;
 
-
 public class Training implements Serializable
 {
    private String trainingStatus;
@@ -14,10 +13,27 @@ public class Training implements Serializable
       this.worker = worker;
    }
 
+   public Training(String trainingStatus, String analysis, String matrix,
+         String name, String initials, String number)
+   {
+      this.trainingStatus = trainingStatus;
+      this.analysis = new Analysis(analysis, matrix);
+      this.worker = new Worker(name, number, initials);
+   }
 
    public String getTrainingStatus()
    {
       return trainingStatus;
+   }
+
+   public void setAnalysis(Analysis analysis)
+   {
+      this.analysis = analysis;
+   }
+
+   public void setWorker(Worker worker)
+   {
+      this.worker = worker;
    }
 
    public Analysis getAnalysis()
@@ -37,8 +53,7 @@ public class Training implements Serializable
 
    public String toString()
    {
-      return "Training status: " + trainingStatus + "\n" + analysis.toString()
-            + worker.toString();
+      return trainingStatus + " " + analysis + " " + worker;
    }
 
    public boolean equals(Object obj)

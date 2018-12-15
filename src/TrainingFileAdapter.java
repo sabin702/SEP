@@ -14,11 +14,11 @@ public class TrainingFileAdapter
 
    public TrainingList getAllTrainings()
    {
-      TrainingList training = new TrainingList();
+      TrainingList trainings = new TrainingList();
 
       try
       {
-         training = (TrainingList) mifo.readObjectFromFile(fileName);
+         trainings = (TrainingList) mifo.readObjectFromFile(fileName);
       }
 
       catch (FileNotFoundException e)
@@ -34,14 +34,14 @@ public class TrainingFileAdapter
          System.out.println("Class not found");
       }
 
-      return training;
+      return trainings;
    }
 
-   public void saveTraining(TrainingList training)
+   public void saveTraining(TrainingList trainings)
    {
       try
       {
-         mifo.writeToFile(fileName, training);
+         mifo.writeToFile(fileName, trainings);
       }
       catch (FileNotFoundException e)
       {
@@ -52,37 +52,27 @@ public class TrainingFileAdapter
          System.out.println("IO Error writing to file");
       }
    }
-   public void changeTraining(String str, Analysis analysis, Worker worker)
+
+  
+
+   public void addTrainings(String trainingStatus, Analysis analysis,
+         Worker worker)
+   {
+      TrainingList trainings = getAllTrainings();
+      trainings.addTraining(trainingStatus, analysis, worker);
+      saveTraining(trainings);
+   }
+
+   public void deleteTraining(String trainingStatus, Analysis analysis,
+         Worker worker)
    {
       TrainingList trainings = getAllTrainings();
 
-      for (int i = 0; i < trainings.getSize(); i++)
-      {
-         Training training = trainings.getTraining(i);
-
-         if (training.getTrainingStatus().equals(str)
-               && training.getAnalysis().equals(analysis) && training.getWorker().equals(worker))
-         {
-            training.setTrainingStatus(str);
-         }
-      }
+      int i = trainings
+            .getIndex(new Training(trainingStatus, analysis, worker));
+      trainings.removeIndex(i);
 
       saveTraining(trainings);
    }
-   
-   
-   public void deleteTraining(String trainingStatus, Analysis analysis, Worker worker)
-   {
-      TrainingList trainings = getAllTrainings();
-      Training training = new Training(trainingStatus, analysis, worker);
-      
-      for (int i=0;i<trainings.getSize();i++)
-      {
-         trainings.removeTraining(training);
-      }
-      
-      saveTraining(trainings);
-   }
-   
-   
+
 }
