@@ -1,5 +1,6 @@
 
 import java.util.GregorianCalendar;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -168,10 +169,42 @@ public class MyDate
                }
             setYear(year + 1);
          }
-      
+   }
+   
+   public void nextDays(int days) {
+      day += days;
+      if(day > daysInMonth()){
+         while(day > daysInMonth()){
+            setDay(day - daysInMonth());
+            }
+         setMonth(month + 1);
+         }
+         if(month > 12) {
+            while(month > 12){
+               setMonth(month - 12);
+               }
+            setYear(year + 1);
+         } 
+   }
+   
+   public MyDate nextDate() {
+      day ++;
+      if(day > daysInMonth()){
+         while(day > daysInMonth()){
+            setDay(day - daysInMonth());
+            }
+         setMonth(month + 1);
+         }
+         if(month > 12) {
+            while(month > 12){
+               setMonth(month - 12);
+               }
+            setYear(year + 1);
+         } 
+         return new MyDate(day, month, year);
    }
    
    public String toString() {
-      return day + "-" + month + "-" + year;
+      return day + "-" + month + "-" + (year-2000);
    }
 }
