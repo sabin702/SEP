@@ -17,6 +17,7 @@ public class SEPmainGUI extends JFrame
 {
    private AnalysisFileAdapter adapter;
    private WorkerFileAdapter workeradapter;
+   private TrainingFileAdapter trainingAdapter;
    
    private JTabbedPane tabpane;
    
@@ -33,6 +34,7 @@ public class SEPmainGUI extends JFrame
    
    private EditAnalysisPanel editAnalysisPanel;
    private ChangeInformationPanel changeInformationPanel;
+   private TrainingFileGUI editTrainingPanel;
    
    public SEPmainGUI()
    {
@@ -40,6 +42,7 @@ public class SEPmainGUI extends JFrame
       
       adapter = new AnalysisFileAdapter("analysis.bin");
       workeradapter = new WorkerFileAdapter("workers.bin");
+      trainingAdapter = new TrainingFileAdapter("training.bin");
       
       buttonListener = new MyButtonListener();
       tabListener = new MyTabListener();
@@ -66,11 +69,13 @@ public class SEPmainGUI extends JFrame
       
       editAnalysisPanel = new EditAnalysisPanel(adapter);
       changeInformationPanel = new ChangeInformationPanel(workeradapter);
+      editTrainingPanel = new TrainingFileGUI(adapter, workeradapter, trainingAdapter);
       
       tabpane=new JTabbedPane();
 
       tabpane.addTab("Edit Worker", changeInformationPanel);
       tabpane.addTab("Edit Analysis", editAnalysisPanel);
+      tabpane.addTab("Edit Training", editTrainingPanel);
       tabpane.addChangeListener(tabListener);
       
       add(tabpane);
@@ -121,6 +126,10 @@ public class SEPmainGUI extends JFrame
          if (((JTabbedPane)e.getSource()).getSelectedIndex()==1)
          {
             editAnalysisPanel.updateAnalysisList();
+         }
+         if (((JTabbedPane)e.getSource()).getSelectedIndex() == 2) {
+            editTrainingPanel.updateAnalysisBox();
+            editTrainingPanel.updateWorkerBox();
          }
       }
    }
