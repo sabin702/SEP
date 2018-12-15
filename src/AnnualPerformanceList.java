@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class AnnualPerformanceList
+public class AnnualPerformanceList implements Serializable
 {
 
    private ArrayList<AnnualPerformance> comments;
@@ -10,7 +11,7 @@ public class AnnualPerformanceList
     */
    public AnnualPerformanceList()
    {
-      comments = new ArrayList<AnnualPerformance>(comments);
+      comments = new ArrayList<AnnualPerformance>();
    }
 
    /**

@@ -50,8 +50,10 @@ public class Worker implements Serializable
    
    public boolean equals(Object obj)
    {
+      if (!(obj instanceof Worker))
+         return false;
       Worker other=(Worker)obj;
-      if (other.name.equals(this.name) && other.number==this.number
+      if (other.name.equals(this.name) && other.number.equals(this.number)
             && other.initials.equals(this.initials))
          return true;
       else 
