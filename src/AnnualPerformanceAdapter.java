@@ -82,35 +82,18 @@ public class AnnualPerformanceAdapter
    public void changeAnnualPerformanceComment(String str, String name , String number, String initials)
    {
       AnnualPerformanceList annuals = getAllAnnualPerformance();
+      AnnualPerformance annual= new AnnualPerformance(str, new Worker(name,number,initials));
       
-      for (int i =0;i<annuals.getSize();i++)
+      for (int i=0;i<annuals.getSize();i++)
       {
-         AnnualPerformance comment= annuals.getAnnualPerformance(i);
-         if (comment.getWorker().getName().equals(name) 
-               && comment.getWorker().getInitials().equals(initials)
-               && comment.getWorker().getNumber().equals(number))
-         { 
-            comment.setComment(str);
-         }
-         else 
-            comment.setComment(null);
+         if ((annual.getWorker().equals(annuals.getAnnualPerformance(i).getWorker()) 
+               && !(annual.getComment().equals(annuals.getAnnualPerformance(i).getComment()))))
+               {
+                  annuals.getAnnualPerformance(i).setComment(annual.getComment());
+               }
       }
+      annuals.addAnnualPerformance(annual);
       
-
-      saveAnnualPerformance(annuals);
-
-   }
-
-   public void deleteComment(String str, Worker worker)
-   {
-      AnnualPerformanceList annuals = getAllAnnualPerformance();
-      AnnualPerformance comment = new AnnualPerformance(str, worker);
-
-      for (int i = 0; i < annuals.getSize(); i++)
-      {
-         annuals.removeAnnualPerformance(comment);
-      }
-
       saveAnnualPerformance(annuals);
    }
    

@@ -38,7 +38,7 @@ public class Analysis implements Serializable
          return false;
       }
       Analysis other = (Analysis) obj;
-      return analysisType == other.analysisType && matrix == other.matrix;
+      return analysisType.equals(other.analysisType) && matrix.equals(other.matrix);
    }
 
    public String toString()

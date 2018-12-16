@@ -280,20 +280,31 @@ public class TrainingFileGUI extends JPanel
       {
          if (e.getSource() == workerBox)
          {
-
+            try
+            {
             Worker worker = (Worker) workerBox.getSelectedItem();
             workerField.setText(worker.getName());
             initialsField.setText(worker.getInitials());
             numberField.setText(worker.getNumber());
             trainingStatusField.setEditable(true);
-
+            }
+            catch (NullPointerException ex)
+            {
+               System.out.print("");
+            }
          }
          if (e.getSource() == analysisBox)
          {
+            try {
             Analysis analysis = (Analysis) analysisBox.getSelectedItem();
             analysisField.setText(analysis.getAnalysisType());
             matrixField.setText(analysis.getMatrix());
             trainingStatusField.setEditable(true);
+            }
+            catch (NullPointerException ex)
+            {
+               System.out.print("");
+            }
          }
          if (e.getSource() == addButton)
          {

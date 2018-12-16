@@ -44,6 +44,11 @@ public class AnnualPerformanceList implements Serializable
    {
       return comments.size();
    }
+   
+   public void removeIndex(int i)
+   {
+      comments.remove(i);
+   }
 
    public AnnualPerformance getAnnualPerformance(int index)
    {

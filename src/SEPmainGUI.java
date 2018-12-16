@@ -73,7 +73,7 @@ public class SEPmainGUI extends JFrame
       editAnalysisPanel = new EditAnalysisPanel(adapter);
       changeInformationPanel = new ChangeInformationPanel(workeradapter);
       editTrainingPanel = new TrainingFileGUI(adapter, workeradapter, trainingAdapter);
-      editAnnualPerformacePrefrence = new EditAnnualPerformacePrefrence(annualadapter);
+      editAnnualPerformacePrefrence = new EditAnnualPerformacePrefrence(annualadapter,workeradapter);
       
       tabpane=new JTabbedPane();
 
@@ -100,7 +100,7 @@ public class SEPmainGUI extends JFrame
          if (e.getSource() == exitMenuItem)
          {
             int choice = JOptionPane.showConfirmDialog(null,
-                  "Do you really want to exit the worst program you ever used?", "Exit",
+                  "Really Exit?", "Exit",
                   JOptionPane.YES_NO_OPTION);
 
             if (choice == JOptionPane.YES_OPTION)
@@ -113,7 +113,8 @@ public class SEPmainGUI extends JFrame
          {
             JOptionPane.showMessageDialog(
                         null,
-                        "This is just a little fail",
+                        "GROUP 3 First group project for SEP 1",
+                        
                         "About", JOptionPane.PLAIN_MESSAGE);
          }
       }
@@ -133,12 +134,14 @@ public class SEPmainGUI extends JFrame
             editAnalysisPanel.updateAnalysisList();
          }
          if (((JTabbedPane)e.getSource()).getSelectedIndex() == 2) {
+            editTrainingPanel.updateTrainingList();
             editTrainingPanel.updateAnalysisBox();
             editTrainingPanel.updateWorkerBox();
          }
          if (((JTabbedPane)e.getSource()).getSelectedIndex() == 3)
          {
             editAnnualPerformacePrefrence.updateAnnualPerformanceList();
+            editAnnualPerformacePrefrence.updateWorkerBox();
          }
       }
    }

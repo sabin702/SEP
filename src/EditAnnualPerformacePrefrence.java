@@ -5,6 +5,7 @@ import java.sql.Savepoint;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -39,6 +40,10 @@ public class EditAnnualPerformacePrefrence extends JPanel
    private JTextField idField;
    private JTextField prefrenceField;
    
+   private JPanel WorkerBoxPanel;
+   private JComboBox<Worker> workerBox;
+   private JLabel workerBoxLabel;
+   
    private JButton updateButton;
    
    private JPanel comboPanel;
@@ -50,10 +55,10 @@ public class EditAnnualPerformacePrefrence extends JPanel
     * Constructor initializing the GUI components
     * @param adapter StudentFileAdapter object used for retrieving and storing student information
     */
-   public EditAnnualPerformacePrefrence (AnnualPerformanceAdapter adapter)
+   public EditAnnualPerformacePrefrence (AnnualPerformanceAdapter adapter, WorkerFileAdapter workeradapter)
    {
       this.adapter=adapter;
-      workeradapter = new WorkerFileAdapter("workers.bin");
+      this.workeradapter = workeradapter;
       buttonListener = new MyButtonListener();
       listListener = new MyListSelectionListener();
       
@@ -74,7 +79,15 @@ public class EditAnnualPerformacePrefrence extends JPanel
       prefrenceLabel = new JLabel("Prefrence:  ");
       prefrenceField = new JTextField(15);
       
-
+      WorkerBoxPanel= new JPanel();
+      
+      workerBoxLabel = new JLabel("Worker");
+      workerBox = new JComboBox<Worker>();
+      workerBox.addActionListener(buttonListener);
+      
+      WorkerBoxPanel.add(workerBoxLabel);
+      WorkerBoxPanel.add(workerBox);
+      
       updateButton = new JButton("Update");
       updateButton.addActionListener(buttonListener);
           
@@ -91,6 +104,7 @@ public class EditAnnualPerformacePrefrence extends JPanel
       inputPanel.add(prefrenceField);
 
       inputPanel.add(updateButton);
+      inputPanel.add(WorkerBoxPanel);
       
       add(inputPanel);
       inputPanel.setPreferredSize(new Dimension(280, 300));
@@ -113,6 +127,29 @@ public class EditAnnualPerformacePrefrence extends JPanel
    }
    
    
+   
+   public void updateWorkerBox()
+   {
+      int currentIndex = workerBox.getSelectedIndex();
+
+      workerBox.removeAllItems();
+
+      WorkersList worker = workeradapter.getAllWorkers();
+      
+      for (int i = 0; i < worker.size(); i++)
+      {
+         workerBox.addItem(worker.get(i));
+      }
+
+      if (currentIndex == -1 && workerBox.getItemCount() > 0)
+      {
+         workerBox.setSelectedIndex(0);
+      }
+      else
+      {
+         workerBox.setSelectedIndex(currentIndex);
+      }
+   }
    /**
     * Updates the studentList JList with information from the students file  
     */
@@ -122,16 +159,10 @@ public class EditAnnualPerformacePrefrence extends JPanel
       
       listModel.clear();
       
-      AnnualPerformanceList annuals= new AnnualPerformanceList();
-      WorkersList workers = workeradapter.getAllWorkers();
+      AnnualPerformanceList annuals= adapter.getAllAnnualPerformance();
       
-      for (int i=0;i<workers.size();i++)
-      {
-         annuals.addAnnualPerformance(new AnnualPerformance("f",workers.get(i)));
-
-      }
-
-      for(int i = 0; i<annuals.getSize(); i++)
+      
+      for (int i=0;i<annuals.getSize();i++)
       {
          listModel.addElement(annuals.getAnnualPerformance(i));
       }
@@ -146,29 +177,6 @@ public class EditAnnualPerformacePrefrence extends JPanel
       }
       
    }
-  
-  public void updateAnnualPerformanceListUpdated()
-  {
-     int currentIndex = annualPerformanceList.getSelectedIndex();
-     
-     listModel.clear();
-     
-     AnnualPerformanceList annuals= new AnnualPerformanceList();
-
-     for(int i = 0; i<annuals.getSize(); i++)
-     {
-        listModel.addElement(annuals.getAnnualPerformance(i));
-     }
-
-     if(currentIndex==-1 && listModel.size()>0)
-     {
-        annualPerformanceList.setSelectedIndex(0);
-     }
-     else
-     {
-        annualPerformanceList.setSelectedIndex(currentIndex);
-     }
-  }
 
    /*
     * Inner action listener class 
@@ -181,14 +189,44 @@ public class EditAnnualPerformacePrefrence extends JPanel
       {
          if (e.getSource() == updateButton)
          {
+            AnnualPerformanceList annuals= adapter.getAllAnnualPerformance();
+            
             String name = nameField.getText();
             String number= numberField.getText();
             String id= idField.getText();
             String str= prefrenceField.getText();
             
-            adapter.changeAnnualPerformanceComment(str, name, number, id);
+            Worker work = new Worker(name,number,id);
             
-            updateAnnualPerformanceListUpdated();
+            for (int i=0;i<annuals.getSize();i++) 
+            {
+               if(annuals.getAnnualPerformance(i).getWorker().equals(work))
+               {
+                  annuals.removeIndex(i);
+                  adapter.saveAnnualPerformance(annuals);
+                  break;   
+               }
+            }
+            annuals.addAnnualPerformance(new AnnualPerformance(str,work));
+            
+            adapter.saveAnnualPerformance(annuals);
+            
+            updateAnnualPerformanceList();
+            
+            prefrenceField.setText("");
+         }
+         if (e.getSource() == workerBox)
+         {
+            try {
+            Worker worker = (Worker) workerBox.getSelectedItem();          
+            nameField.setText(worker.getName());
+            idField.setText(worker.getInitials());
+            numberField.setText(worker.getNumber());          
+            }
+            catch (NullPointerException ex)
+            {
+               System.out.print("");
+            }
          }
       }
    }
