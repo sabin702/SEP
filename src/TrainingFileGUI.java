@@ -337,13 +337,54 @@ public class TrainingFileGUI extends JPanel
          }
          if (e.getSource() == editButton)
          {
-            trainingStatusField.setEnabled(true);
+            trainingStatusField.setEditable(true);
             workerBox.setEnabled(false);
             analysisBox.setEnabled(false);
          }
          if (e.getSource() == saveButton)
          {
-           
+            workerBox.setEnabled(true);
+            analysisBox.setEnabled(true);
+            trainingStatusField.setEditable(false);
+            
+            TrainingList trainings = trainingAdapter.getAllTrainings();
+            
+            String matrix = matrixField.getText();
+            String analysis = analysisField.getText();
+            String initials = initialsField.getText();
+            String name = workerField.getText();
+            String number = numberField.getText();
+            String training = trainingStatusField.getText();
+
+            Analysis analy = new Analysis(analysis, matrix);
+            Worker work = new Worker(name, number, initials);
+            
+            for (int i=0;i<trainings.getSize();i++) 
+            {
+               if(trainings.get(i).getWorker().equals(work) 
+                     && trainings.get(i).getAnalysis().equals(analy))
+               {
+                  trainings.removeIndex(i);
+                  trainingAdapter.saveTraining(trainings);
+                  break;
+                  
+               }
+            }
+            
+            trainings.addTraining(training, analy, work);
+
+            
+            trainingAdapter.saveTraining(trainings);
+            
+
+            matrixField.setText("");
+            analysisField.setText("");
+            initialsField.setText("");
+            workerField.setText("");
+            numberField.setText("");
+            trainingStatusField.setText("");
+            updateTrainingList();
+
          }
       }
    }
