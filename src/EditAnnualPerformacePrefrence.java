@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -198,6 +199,21 @@ public class EditAnnualPerformacePrefrence extends JPanel
             
             Worker work = new Worker(name,number,id);
             
+            boolean emptyField=false;
+            
+            if (name.equals("") || number.equals("") || id.equals("") || str.equals(""))
+               emptyField=true;
+            
+            if (emptyField==true)
+            {
+               JOptionPane.showMessageDialog(
+                     null,
+                     "One or more fields is empty!",
+                     
+                     "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else
+            {
             for (int i=0;i<annuals.getSize();i++) 
             {
                if(annuals.getAnnualPerformance(i).getWorker().equals(work))
@@ -214,6 +230,7 @@ public class EditAnnualPerformacePrefrence extends JPanel
             updateAnnualPerformanceList();
             
             prefrenceField.setText("");
+            }
          }
          if (e.getSource() == workerBox)
          {
