@@ -134,7 +134,6 @@ public class LoadData
       }
       
       System.out.println("Done");
-      System.out.println(trainings);
       
       ///ANNUALPREFRENCE
       AnnualPerformanceList annuals = new AnnualPerformanceList();
@@ -174,6 +173,101 @@ public class LoadData
       catch (IOException e)
       {
          System.out.println("IO Error writing to file ");
+      }
+      
+      System.out.println("Done");
+      
+    ///WEEKLY PLAN
+      WeeklyPlanList weeklyPlans = new WeeklyPlanList();
+      String[] weeklyPlanArray = null;
+      try
+      {
+         weeklyPlanArray = mtfio.readArrayFromFile("weeklyPlan.txt");
+                      
+         for(int i = 0; i<weeklyPlanArray.length; i++)
+         {
+            String temp = weeklyPlanArray[i];
+            String[] tempArr = temp.split(",");
+         
+            String analysisName = tempArr[0];
+            String matrixName = tempArr[1];
+            String weekSize = tempArr[2];
+            double [] numberOfEmployees = new double[6];
+            for (int j = 0; j < numberOfEmployees.length; j++)
+            {
+               numberOfEmployees[j] = Double.parseDouble(tempArr[j+3]);
+            }
+            
+            weeklyPlans.addWeeklyPlan(new WeeklyPlan(new Analysis(analysisName, matrixName), weekSize, numberOfEmployees));
+         }
+         
+      }
+      catch (FileNotFoundException e)
+      {
+         System.out.println("File was not found, or could not be opened");
+      }     
+      try
+      {
+         mfio.writeToFile("weeklyPlan.bin", weeklyPlans);
+      }
+      
+      catch (FileNotFoundException e)
+      {
+         System.out.println("Error opening file ");
+      }
+      catch (IOException e)
+      {
+         System.out.println("IO Error writing to file ");
+         e.printStackTrace();
+      }
+      
+      System.out.println("Done");
+      
+      
+      ///WORK PLAN
+      WorkPlanList workPlans = new WorkPlanList();
+      String[] workPlanArray = null;
+      try
+      {
+         workPlanArray = mtfio.readArrayFromFile("workPlan.txt");
+                      
+         for(int i = 0; i<workPlanArray.length; i++)
+         {
+            String temp = workPlanArray[i];
+            String[] tempArr = temp.split(",");
+         
+            String name = tempArr[0];
+            String number = tempArr[1];
+            String initials = tempArr[2];
+            String comment = tempArr[3];
+            Worker worker = new Worker(name, number, initials);
+            TrainingList trainingList= new TrainingList();
+            for (int j = 1; j < trainingList.getSize(); j++)
+            {
+               trainingList.addTraining(tempArr[3*j+1], new Analysis(tempArr[3*j+2], tempArr[3*j+3]), worker);
+            }
+            
+            workPlans.addWorkPlan(new WorkPlan(worker, new AnnualPerformance(comment, worker), trainingList));
+         }
+         
+      }
+      catch (FileNotFoundException e)
+      {
+         System.out.println("File was not found, or could not be opened");
+      }     
+      try
+      {
+         mfio.writeToFile("workPlan.bin", workPlans);
+      }
+      
+      catch (FileNotFoundException e)
+      {
+         System.out.println("Error opening file ");
+      }
+      catch (IOException e)
+      {
+         System.out.println("IO Error writing to file ");
+         e.printStackTrace();
       }
       
       System.out.println("Done");

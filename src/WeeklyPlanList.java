@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class WeeklyPlanList
+public class WeeklyPlanList implements Serializable
 {
    ArrayList<WeeklyPlan> weeklyPlans;
    

@@ -19,6 +19,8 @@ public class SEPmainGUI extends JFrame
    private WorkerFileAdapter workeradapter;
    private TrainingFileAdapter trainingAdapter;
    private AnnualPerformanceAdapter annualadapter;
+   private WeeklyPlanFileAdapter weeklyPlaAdapter;
+   private WorkPlanAdapter workPlanAdapter;
    
    private JTabbedPane tabpane;
    
@@ -37,6 +39,8 @@ public class SEPmainGUI extends JFrame
    private ChangeInformationPanel changeInformationPanel;
    private TrainingFileGUI editTrainingPanel;
    private EditAnnualPerformacePrefrence editAnnualPerformacePrefrence;
+   private WeeklyPlanPanel weeklyPlanPanel;
+   private WorkPlanPanel workPlanPanel;
    
    public SEPmainGUI()
    {
@@ -46,6 +50,8 @@ public class SEPmainGUI extends JFrame
       workeradapter = new WorkerFileAdapter("workers.bin");
       trainingAdapter = new TrainingFileAdapter("training.bin");
       annualadapter = new AnnualPerformanceAdapter("annuals.bin");
+      weeklyPlaAdapter = new WeeklyPlanFileAdapter("weeklyPlan.bin");
+      workPlanAdapter = new WorkPlanAdapter("workPlan.bin");
       
       buttonListener = new MyButtonListener();
       tabListener = new MyTabListener();
@@ -74,6 +80,8 @@ public class SEPmainGUI extends JFrame
       changeInformationPanel = new ChangeInformationPanel(workeradapter);
       editTrainingPanel = new TrainingFileGUI(adapter, workeradapter, trainingAdapter);
       editAnnualPerformacePrefrence = new EditAnnualPerformacePrefrence(annualadapter,workeradapter);
+      weeklyPlanPanel = new WeeklyPlanPanel(weeklyPlaAdapter, adapter);
+      workPlanPanel = new WorkPlanPanel(workPlanAdapter, workeradapter,annualadapter, trainingAdapter);
       
       tabpane=new JTabbedPane();
 
@@ -81,6 +89,8 @@ public class SEPmainGUI extends JFrame
       tabpane.addTab("Edit Analysis", editAnalysisPanel);
       tabpane.addTab("Edit Training", editTrainingPanel);
       tabpane.addTab("Edit AnnualPrefrence", editAnnualPerformacePrefrence);
+      tabpane.addTab("Weekly Plan", weeklyPlanPanel);
+      tabpane.addTab("Work Plan", workPlanPanel);
       tabpane.addChangeListener(tabListener);
       
       add(tabpane);
@@ -142,6 +152,16 @@ public class SEPmainGUI extends JFrame
          {
             editAnnualPerformacePrefrence.updateAnnualPerformanceList();
             editAnnualPerformacePrefrence.updateWorkerBox();
+         }
+         if (((JTabbedPane)e.getSource()).getSelectedIndex() == 4)
+         {
+            weeklyPlanPanel.updateWeeklyPlanTable();
+            weeklyPlanPanel.changeEditableState(true);
+         }
+         if (((JTabbedPane)e.getSource()).getSelectedIndex() == 5)
+         {
+            workPlanPanel.updateWorkPlanTable();
+            workPlanPanel.changeEditableState(true);
          }
       }
    }

@@ -18,7 +18,6 @@ public class WeeklyPlanFileAdapter
       try {
          weeklyPlans = (WeeklyPlanList) mfio.readObjectFromFile(fileName);
       }
-      
       catch(FileNotFoundException e){
          System.out.println("File Not Found");
       }

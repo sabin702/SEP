@@ -1,15 +1,17 @@
-public class WeeklyPlan
+import java.io.Serializable;
+
+public class WeeklyPlan implements Serializable
 {
    private Analysis analysis;
    private String weekSize;
    //private double numberOfEmployees;
    double[] weeklyEmployees;
    
-   public WeeklyPlan(Analysis analysis, String weekSize) {
+   public WeeklyPlan(Analysis analysis, String weekSize, double[] weeklyEmployees) {
       this.analysis = analysis;
       this.weekSize = weekSize;
       //this.numberOfEmployees = numberOfEmployees;
-      weeklyEmployees = new double[6];
+      this.weeklyEmployees = weeklyEmployees;
    }
    
    public Analysis getAnalysis() {

@@ -3,9 +3,12 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,10 +17,12 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
-public class WeeklyPlanPanel extends JFrame
+public class WeeklyPlanPanel extends JPanel
 {
    private WeeklyPlanFileAdapter adapter;
+   private AnalysisFileAdapter analysisAdapter;
    private MyButtonListener buttonListener;
   
    private JTable weeklyPlanTable;
@@ -28,7 +33,7 @@ public class WeeklyPlanPanel extends JFrame
    private JScrollPane weeklyPlanScrollPane;
    
    private JButton getButton;
-   private JButton editButton;
+   private JButton saveButton;
   
    private JPanel datePanel;
    private JLabel currentDate;
@@ -37,21 +42,24 @@ public class WeeklyPlanPanel extends JFrame
     * Constructor initializing the GUI components
     * @param adapter StudentFileAdapter object used for retrieving and storing student information
     */
-   public WeeklyPlanPanel(WeeklyPlanFileAdapter adapter)
+   public WeeklyPlanPanel(WeeklyPlanFileAdapter adapter, AnalysisFileAdapter analysisFileAdapter)
    {
       this.adapter = adapter;
+      this.analysisAdapter = analysisFileAdapter;
       buttonListener = new MyButtonListener();
       
       date = new MyDate();
             
-      columnNames = new String[7];
-      columnNames[0] = "Initials";
-      columnNames[1] = "Date";
-      columnNames[2] = date.toString();
-      columnNames[3] = date.nextDate().toString();
-      columnNames[4] = date.nextDate().toString();
-      columnNames[5] = date.nextDate().toString();
-      columnNames[6] = date.nextDate().toString();
+      columnNames = new String[9];
+      columnNames[0] = "Matrix";
+      columnNames[1] = "Week size";
+      columnNames[2] = "Analysis";
+      columnNames[3] = "No. Persons";
+      columnNames[4] = "No. Persons";
+      columnNames[5] = "No. Persons";
+      columnNames[6] = "No. Persons";
+      columnNames[7] = "No. Persons";
+      columnNames[8] = "No. Persons";
       
       
       dtm = new DefaultTableModel(columnNames, 0);
@@ -86,14 +94,14 @@ public class WeeklyPlanPanel extends JFrame
       
       add(weeklyPlanScrollPane);
 
-      getButton = new JButton("Get Students");
+      getButton = new JButton("Display Weekly Plan");
       getButton.addActionListener(buttonListener);
       
-      editButton = new JButton("Edit");
-      
+      saveButton = new JButton("Save");
+      //saveButton.addActionListener(buttonListener);
       
       add(getButton);
-      
+     // add(saveButton);
    }
    
    /**
@@ -112,23 +120,52 @@ public class WeeklyPlanPanel extends JFrame
    public void updateWeeklyPlanTable()
    {
       WeeklyPlanList weeklyPlans = adapter.getAllWeeklyPlans();
-      Object[][] data = new Object[weeklyPlans.size()][7];
+      AnalysisList analyses = analysisAdapter.getAllAnalysis();
       
-      for(int i = 0; i<weeklyPlans.size();i++)
+      Object[][] data = new Object[analyses.size()*3][9];
+      
+      int tableSize = analyses.size();
+      
+      for(int i = 0; i<analyses.size();i++)
       {
-         data[i][0] = weeklyPlans.get(i).getAnalysis().getAnalysisType();
-         data[i][1] = weeklyPlans.get(i).getWeekSize();
-         data[i][2] = weeklyPlans.get(i).getAnalysis().getMatrix();
-         data[i][3] = weeklyPlans.get(i).getNumberOfEmployees(i);
-         data[i][4] = weeklyPlans.get(i).getNumberOfEmployees(i);
-         data[i][5] = weeklyPlans.get(i).getNumberOfEmployees(i);
-         data[i][6] = weeklyPlans.get(i).getNumberOfEmployees(i);
-         data[i][7] = weeklyPlans.get(i).getNumberOfEmployees(i);
-         data[i][8] = weeklyPlans.get(i).getNumberOfEmployees(i);
-         
+         data[i][0] = analyses.get(i).getMatrix();
+         data[i][1] = "S";
+         data[i][2] = analyses.get(i).getAnalysisType();
+      }
+      
+      while(tableSize<analyses.size()*2) {
+         for(int i = 0; i<analyses.size();i++)
+         {  
+         data[tableSize][0] = analyses.get(i).getMatrix();
+         data[tableSize][1] = "L";
+         data[tableSize][2] = analyses.get(i).getAnalysisType();
+         tableSize++;
+         }
+      }
+      
+      while(tableSize<analyses.size()*3) {
+      for(int i = 0; i<analyses.size();i++)
+      {
+         data[tableSize][0] = analyses.get(i).getMatrix();
+         data[tableSize][1] = "All";
+         data[tableSize][2] = analyses.get(i).getAnalysisType();
+         tableSize++;
+         }
       }
       dtm = new DefaultTableModel(data, columnNames);
+      
       weeklyPlanTable.setModel(dtm);
+ String[] values = {"0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4"};
+      TableColumn[] columns = new TableColumn[6];
+      for (int i = 0; i < columns.length; i++)
+      {
+         columns[i] = weeklyPlanTable.getColumnModel().getColumn(i+3);
+         columns[i].setCellEditor(new MyComboBoxEditor(values));
+         columns[i].setCellRenderer(new MyComboBoxRender(values));
+      }
+      //TableColumn col = weeklyPlanTable.getColumnModel().getColumn(3);
+      //col.setCellEditor(new MyComboBoxEditor(values));
+      //col.setCellRenderer(new MyComboBoxRender(values));
    }  
    
    /*
@@ -144,6 +181,32 @@ public class WeeklyPlanPanel extends JFrame
          {
             updateWeeklyPlanTable();
          }
+         
+        /* else if (e.getSource() == saveButton)
+         {
+            updateWeeklyPlanTable();
+         }*/
+      }
+   }
+   
+   private class MyComboBoxRender extends JComboBox implements TableCellRenderer{
+      public MyComboBoxRender(String[] items) {
+         super(items);
+      }
+      
+      public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column)
+      {
+         if (isSelected) {
+            setForeground(table.getSelectionForeground());
+            super.setBackground(table.getSelectionBackground());
+         }
+         else {
+            setForeground(table.getForeground());
+            setBackground(table.getBackground());
+         }
+         setSelectedItem(value);
+         return this;
       }
    }
    
@@ -156,5 +219,11 @@ public class WeeklyPlanPanel extends JFrame
          return null;
       }
       
+   }   
+   
+   class MyComboBoxEditor extends DefaultCellEditor {
+      public MyComboBoxEditor(String[] items) {
+         super(new JComboBox<String>(items));
+      }
    }
 }
