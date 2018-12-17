@@ -161,7 +161,7 @@ public class SEPmainGUI extends JFrame
          if (((JTabbedPane)e.getSource()).getSelectedIndex() == 5)
          {
             workPlanPanel.updateWorkPlanTable();
-            workPlanPanel.changeEditableState(true);
+            workPlanPanel.changeEditableState(false);
          }
       }
    }

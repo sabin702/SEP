@@ -21,15 +21,15 @@ public class WeeklyPlanList implements Serializable
       weeklyPlans.remove(index);
    }
    
-   public int getIndex(Analysis analysis, String weekSize, double[] weeklyNumber) 
+   public int getIndex(Analysis analysis, String weekSize) 
    {
       for(int i = 0;i<weeklyPlans.size();i++) {
          WeeklyPlan temp = weeklyPlans.get(i);
          
          if (temp.getAnalysis().equals(analysis) 
-               && temp.getWeekSize().equals(weekSize)
-               && temp.equalsWeeklyEmployees(weeklyNumber))
+               && temp.getWeekSize().equals(weekSize)) {
             return i;
+         }
       }
       return -1;
    }

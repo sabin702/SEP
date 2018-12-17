@@ -53,12 +53,43 @@ public class WeeklyPlanFileAdapter
          if(weeklyPlans.get(i).getAnalysis().equals(analysis)
                && weeklyPlans.get(i).getWeekSize().equals(weekSize)) 
          {
-            for (int j = 0; j < numberOfEmpployees.length; j++)
+            for (int j = 0; j < 6; j++)
             {
                weeklyPlans.get(i).setNumberOfEmployees(j, numberOfEmpployees[j]);
             }
          }
       }
+      saveWeeklyPlans(weeklyPlans);
+   }
+   
+   public boolean existentWeeklyPlan(Analysis analysis, String weekSize, double[] numberOfEmpployees)
+   {
+      WeeklyPlanList weeklyPlans = getAllWeeklyPlans();
+      
+      for (int i = 0; i < weeklyPlans.size(); i++)
+      {
+         if(weeklyPlans.get(i).getAnalysis().equals(analysis)
+               && weeklyPlans.get(i).getWeekSize().equals(weekSize)) 
+         {
+            for (int j = 0; j < numberOfEmpployees.length; j++)
+            {
+               if(weeklyPlans.get(i).getNumberOfEmployees(j) == numberOfEmpployees[j])
+                  return true;
+               else
+                  return false;
+            }
+         }
+      }
+      return false;
+   }
+   
+   public void addWeeklyPlan(WeeklyPlan weeklyPlan)
+   {
+      WeeklyPlanList weeklyPlans= getAllWeeklyPlans();
+      
+      weeklyPlans.addWeeklyPlan(weeklyPlan);
+      
+      saveWeeklyPlans(weeklyPlans);
    }
    
 }

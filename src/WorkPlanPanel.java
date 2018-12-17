@@ -16,6 +16,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.text.TableView.TableRow;
 
 public class WorkPlanPanel extends JPanel
 {
@@ -100,9 +101,11 @@ public class WorkPlanPanel extends JPanel
       getButton.addActionListener(buttonListener);
       
       saveButton = new JButton("Save");
+      saveButton.addActionListener(buttonListener);
       
       
       add(getButton);
+      add(saveButton);
       
    }
    
@@ -116,13 +119,19 @@ public class WorkPlanPanel extends JPanel
      workPlanTable.clearSelection();
    }
    
+   
+   public void saveWorkPlanTable()
+   {
+      WorkPlanList workPlans = adapter.getAllWorkPlans();
+   }
+   
    /**
     * Updates the allStudentsTable JTable with information from the students file
     */
    public void updateWorkPlanTable()
    {
-      WorkPlanList workPlans = adapter.getAllWorkPlans();
-      WorkersList workers = workerAdapter.getAllWorkers();
+      //WorkPlanList workPlans = adapter.getAllWorkPlans();
+     // WorkersList workers = workerAdapter.getAllWorkers();
       AnnualPerformanceList annuals = annualAdapter.getAllAnnualPerformance();
       TrainingList trainings = trainingAdapter.getAllTrainings();
       Object[][] data = new Object[annuals.getSize()][7];
@@ -151,8 +160,13 @@ public class WorkPlanPanel extends JPanel
       }
       
       TableColumn[] columns = new TableColumn[5];
+      //TableRow[] rows = new TableRow[annuals.getSize()];
       for (int i = 0; i < columns.length; i++)
       {
+         /*columns[i] = workPlanTable.getColumnModel().getColumn(i+2);
+         columns[i].setCellEditor(new MyComboBoxEditor(analyses));
+         columns[i].setCellRenderer(new MyComboBoxRender(analyses));*/
+         //rows[i] = workPlanTable.getRow;
          columns[i] = workPlanTable.getColumnModel().getColumn(i+2);
          columns[i].setCellEditor(new MyComboBoxEditor(analyses));
          columns[i].setCellRenderer(new MyComboBoxRender(analyses));
@@ -171,6 +185,11 @@ public class WorkPlanPanel extends JPanel
          if (e.getSource() == getButton)
          {
             updateWorkPlanTable();
+         }
+         if (e.getSource() == saveButton)
+         {
+            
+           saveWorkPlanTable();
          }
       }
    }

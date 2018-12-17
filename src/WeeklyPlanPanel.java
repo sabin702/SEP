@@ -38,12 +38,21 @@ public class WeeklyPlanPanel extends JPanel
    private JPanel datePanel;
    private JLabel currentDate;
    
+   private JComboBox<String> combo;
+   
    /**
     * Constructor initializing the GUI components
     * @param adapter StudentFileAdapter object used for retrieving and storing student information
     */
    public WeeklyPlanPanel(WeeklyPlanFileAdapter adapter, AnalysisFileAdapter analysisFileAdapter)
    {
+      combo = new JComboBox<String>();
+      
+      String[] values = {"0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4"};
+      for(int j = 0;j< values.length;j++) {
+         combo.addItem(values[j]);
+      }
+      
       this.adapter = adapter;
       this.analysisAdapter = analysisFileAdapter;
       buttonListener = new MyButtonListener();
@@ -64,25 +73,12 @@ public class WeeklyPlanPanel extends JPanel
       
       dtm = new DefaultTableModel(columnNames, 0);
       
-      weeklyPlanTable = new JTable(dtm) {
-         //Implement Table cell tool tips
-         public String getToolTipText(MouseEvent e) {
-            
-            WeeklyPlanList weeklyPlans = adapter.getAllWeeklyPlans();
-            
-            String tip = null;
-            java.awt.Point point = e.getPoint();
-            int rowIndex = rowAtPoint(point);
-            int colIndex = columnAtPoint(point);
-            //int realColumnIndex = convertColumnIndexToModel(colIndex);
-            tip = weeklyPlans.get(rowIndex).getAnalysis().getAnalysisType() + " belongs to: " + weeklyPlans.get(rowIndex).getAnalysis().getMatrix();
-            return tip;
-         }
-      };
+      weeklyPlanTable = new JTable(dtm);
       weeklyPlanTable.setEnabled(false);
       weeklyPlanTable.getTableHeader().setReorderingAllowed(false);
       weeklyPlanTable.getTableHeader().setResizingAllowed(false);
       weeklyPlanTable.setPreferredScrollableViewportSize(new Dimension(700, weeklyPlanTable.getRowHeight()*18));
+      
       
       weeklyPlanScrollPane = new JScrollPane(weeklyPlanTable);
       weeklyPlanScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -98,10 +94,10 @@ public class WeeklyPlanPanel extends JPanel
       getButton.addActionListener(buttonListener);
       
       saveButton = new JButton("Save");
-      //saveButton.addActionListener(buttonListener);
+      saveButton.addActionListener(buttonListener);
       
       add(getButton);
-     // add(saveButton);
+      add(saveButton);
    }
    
    /**
@@ -112,6 +108,47 @@ public class WeeklyPlanPanel extends JPanel
    {
      weeklyPlanTable.setEnabled(bool);
      weeklyPlanTable.clearSelection();
+   }
+   
+   public void saveWeeklyPlanTable()
+   {
+      
+for (int i = 0; i < weeklyPlanTable.getModel().getRowCount(); i++)
+{
+  String mName = (String)weeklyPlanTable.getModel().getValueAt(i, 0);
+  String wType = (String)weeklyPlanTable.getModel().getValueAt(i, 1);
+  String aName = (String)weeklyPlanTable.getModel().getValueAt(i, 2);
+  String moNumber =  (String)weeklyPlanTable.getModel().getValueAt(i, 3);
+  String tuNumber = (String)weeklyPlanTable.getModel().getValueAt(i, 4);
+  String weNumber =  (String)weeklyPlanTable.getModel().getValueAt(i, 5);
+  String thNumber = (String)weeklyPlanTable.getModel().getValueAt(i, 6);
+  String frNumber =  (String)weeklyPlanTable.getModel().getValueAt(i, 7);
+  String saNumber =  (String)weeklyPlanTable.getModel().getValueAt(i, 8);
+
+System.out.println(mName + " " + wType + " " + aName+ " " + moNumber + " " + tuNumber + " " + weNumber + " " + thNumber + " " + frNumber + " " + saNumber);
+
+Analysis a = new Analysis(aName, mName);
+double[] emp = new double[6];
+/*for (int j=0;j<emp.length;j++) {
+   if(weeklyPlanTable.getModel().getValueAt(i, j+3) == null)
+      emp[j] = 23;
+   else {
+      String value = (String)weeklyPlanTable.getModel().getValueAt(i, j+3);
+      emp[j] =Double.parseDouble(value);
+   }
+}*/
+
+emp[0] = Double.parseDouble(moNumber);
+emp[1] = Double.parseDouble(tuNumber);
+emp[2] = Double.parseDouble(weNumber);
+emp[3] = Double.parseDouble(thNumber);
+emp[4] = Double.parseDouble(frNumber);
+emp[5] = Double.parseDouble(saNumber);
+
+adapter.changeWeeklyPlan(a, wType, emp);
+//adapter.addWeeklyPlan(new WeeklyPlan(a, wType, emp));
+
+}
    }
    
    /**
@@ -152,20 +189,63 @@ public class WeeklyPlanPanel extends JPanel
          tableSize++;
          }
       }
+      
       dtm = new DefaultTableModel(data, columnNames);
       
       weeklyPlanTable.setModel(dtm);
- String[] values = {"0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4"};
       TableColumn[] columns = new TableColumn[6];
+      String[] values = {"0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4"};
       for (int i = 0; i < columns.length; i++)
       {
          columns[i] = weeklyPlanTable.getColumnModel().getColumn(i+3);
          columns[i].setCellEditor(new MyComboBoxEditor(values));
-         columns[i].setCellRenderer(new MyComboBoxRender(values));
+         //columns[i].setCellRenderer(new MyComboBoxRender(values));
       }
-      //TableColumn col = weeklyPlanTable.getColumnModel().getColumn(3);
-      //col.setCellEditor(new MyComboBoxEditor(values));
-      //col.setCellRenderer(new MyComboBoxRender(values));
+      
+      Analysis analysis;
+      
+      for (int i = 0; i < weeklyPlanTable.getModel().getRowCount(); i++)
+      {
+         //String analysisType = (String)weeklyPlanTable.getModel().getValueAt(i, 2);
+         //String matrix = (String) weeklyPlanTable.getModel().getValueAt(i, 0);
+         //String weekType = (String) weeklyPlanTable.getModel().getValueAt(i, 1);
+         
+         //analysis = new Analysis(analysisType, matrix);
+         
+         //int index = weeklyPlans.getIndex(analysis, weekType);
+         String[] weeklyNumber = new String[6];
+         
+         
+         for(int n=0; n<weeklyNumber.length;n++) {
+            if (weeklyPlans.get(i) != null)
+               weeklyNumber[n] = String.valueOf(weeklyPlans.get(i).getWeeklyEmployee(n));
+            else
+               weeklyNumber[n] = "0";
+         }
+         
+         
+         for(int m=0; m<weeklyNumber.length;m++) {
+               weeklyPlanTable.getModel().setValueAt(weeklyNumber[m], i, m+3);
+         }
+        /* 
+         if (index != (-1))
+         {
+         weeklyPlanTable.getModel().setValueAt(weeklyPlans.get(index).getWeeklyEmployee(0), i, 3);
+         weeklyPlanTable.getModel().setValueAt(weeklyPlans.get(index).getWeeklyEmployee(1), i, 4);
+         weeklyPlanTable.getModel().setValueAt(weeklyPlans.get(index).getWeeklyEmployee(2), i, 5);
+         weeklyPlanTable.getModel().setValueAt(weeklyPlans.get(index).getWeeklyEmployee(3), i, 6);
+         weeklyPlanTable.getModel().setValueAt(weeklyPlans.get(index).getWeeklyEmployee(4), i, 7);
+         weeklyPlanTable.getModel().setValueAt(weeklyPlans.get(index).getWeeklyEmployee(5), i, 8);
+         }
+         else {
+            weeklyPlanTable.getModel().setValueAt(1, i, 3);
+            weeklyPlanTable.getModel().setValueAt(1, i, 4);
+            weeklyPlanTable.getModel().setValueAt(1, i, 5);
+            weeklyPlanTable.getModel().setValueAt(1, i, 6);
+            weeklyPlanTable.getModel().setValueAt(1, i, 7);
+            weeklyPlanTable.getModel().setValueAt(1, i, 8);
+         }*/
+      }
    }  
    
    /*
@@ -182,16 +262,17 @@ public class WeeklyPlanPanel extends JPanel
             updateWeeklyPlanTable();
          }
          
-        /* else if (e.getSource() == saveButton)
+         else if (e.getSource() == saveButton)
          {
-            updateWeeklyPlanTable();
-         }*/
+           saveWeeklyPlanTable();
+         }
       }
    }
    
    private class MyComboBoxRender extends JComboBox implements TableCellRenderer{
       public MyComboBoxRender(String[] items) {
          super(items);
+         super.setSelectedItem("0");
       }
       
       public Component getTableCellRendererComponent(JTable table, Object value,
@@ -223,7 +304,7 @@ public class WeeklyPlanPanel extends JPanel
    
    class MyComboBoxEditor extends DefaultCellEditor {
       public MyComboBoxEditor(String[] items) {
-         super(new JComboBox<String>(items));
+         super(combo);
       }
    }
 }

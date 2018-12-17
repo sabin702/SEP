@@ -4,13 +4,11 @@ public class WeeklyPlan implements Serializable
 {
    private Analysis analysis;
    private String weekSize;
-   //private double numberOfEmployees;
    double[] weeklyEmployees;
    
    public WeeklyPlan(Analysis analysis, String weekSize, double[] weeklyEmployees) {
       this.analysis = analysis;
       this.weekSize = weekSize;
-      //this.numberOfEmployees = numberOfEmployees;
       this.weeklyEmployees = weeklyEmployees;
    }
    
@@ -48,6 +46,13 @@ public class WeeklyPlan implements Serializable
       return weeklyEmployees;
    }
    
+   public double getWeeklyEmployee(int index) { 
+      if(index<weeklyEmployees.length)
+         return weeklyEmployees[index];
+      else
+         return -1;
+   }
+   
    public boolean equalsWeeklyEmployees(double[] temp) {
       if (temp.length != weeklyEmployees.length)
          return false;
@@ -57,6 +62,13 @@ public class WeeklyPlan implements Serializable
             return false;
       }
       return true;
+   }
+   
+   public boolean matchingAnalysisAndWeekType(Analysis analysis, String weekType) {
+      if(this.analysis.equals(analysis) && weekSize.equals(weekType))
+         return true;
+      else
+         return false;
    }
    
    public String toString() {
