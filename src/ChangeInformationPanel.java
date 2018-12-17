@@ -6,6 +6,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -70,8 +71,9 @@ public class ChangeInformationPanel extends JPanel
       idField = new JTextField(15);
       idField.setEditable(false);
 
-      updateButton = new JButton("Update");
+      updateButton = new JButton("Save");
       updateButton.addActionListener(buttonListener);
+      updateButton.setEnabled(false);
       
       editButton = new JButton("Edit");
       editButton.addActionListener(buttonListener);
@@ -81,6 +83,7 @@ public class ChangeInformationPanel extends JPanel
       
       addButton = new JButton("Add");
       addButton.addActionListener(buttonListener);
+      addButton.setEnabled(false);
       
       deleteButton = new JButton("Delete");
       deleteButton.addActionListener(buttonListener);
@@ -144,6 +147,13 @@ public class ChangeInformationPanel extends JPanel
       {
          workerList.setSelectedIndex(currentIndex);
       }
+      
+      if (workerList.getSelectedIndex()<0 || workerList.getSelectedIndex()>workers.size())
+      {
+         deleteButton.setEnabled(false);
+      }
+      else
+         deleteButton.setEnabled(true);
    }
 
    /*
@@ -159,6 +169,8 @@ public class ChangeInformationPanel extends JPanel
          {
             nameField.setEditable(true);
             idField.setEditable(true); 
+            
+            updateButton.setEnabled(true);
          }
          if (e.getSource() == updateButton)
          {
@@ -166,14 +178,34 @@ public class ChangeInformationPanel extends JPanel
             String name = nameField.getText();
             String number= numberField.getText();
             String id= idField.getText();
+            boolean emptyFields=false;
             
-            
+            if (name.equals("") || number.equals("") || id.equals(""))
+            {
+               emptyFields=true;
+            }
+
+            if (emptyFields==true)
+            {
+               {
+               JOptionPane.showMessageDialog(
+                     null,
+                     "One or more fields is empty!",
+                     "Erorr", JOptionPane.ERROR_MESSAGE);
+               }
+            }
+            else {
             adapter.changeInformation(name, number, id);
             updateWorkerList();
             
             nameField.setText("");
             numberField.setText("");
             idField.setText("");
+            numberField.setEditable(false);
+            nameField.setEditable(false);
+            idField.setEditable(false); 
+            updateButton.setEnabled(false);
+            }
          }
          if (e.getSource() == clearButton)
          {
@@ -183,6 +215,7 @@ public class ChangeInformationPanel extends JPanel
             numberField.setEditable(true);
             nameField.setEditable(true);
             idField.setEditable(true); 
+            addButton.setEnabled(true);
          }
          if (e.getSource() == addButton)
          {
@@ -190,9 +223,51 @@ public class ChangeInformationPanel extends JPanel
             String number= numberField.getText();
             String id= idField.getText();
             
+            WorkersList workers=adapter.getAllWorkers();
+            boolean sameWorker=false;
+            boolean emptyField=false;
+            
+            for (int i=0;i<workers.size();i++)
+            {
+               if (workers.get(i).getName().equals(name) &&
+                     workers.get(i).getInitials().equals(id) &&
+                     workers.get(i).getNumber().equals(number))
+               {
+                  sameWorker = true;
+                  break;
+               }     
+            }
+            
+            if (name.equals("") || number.equals("") || id.equals(""))
+               emptyField=true;
+            
+            
+            
+            if (sameWorker==false && emptyField==false)
+            {
             adapter.addWorker(name, number, id);
             updateWorkerList();
-         }
+            numberField.setEditable(false);
+            nameField.setEditable(false);
+            idField.setEditable(false);
+            addButton.setEnabled(false);
+            }
+            else if (sameWorker==true)
+            {
+               JOptionPane.showMessageDialog(
+                     null,
+                     "Worker already exists!",
+                     "Erorr", JOptionPane.ERROR_MESSAGE);
+            }
+            else if(emptyField==true)
+               {
+               JOptionPane.showMessageDialog(
+                     null,
+                     "One or more fields is empty!",
+                     "Erorr", JOptionPane.ERROR_MESSAGE);
+               }
+            }
+         
          if (e.getSource()== deleteButton)
          {
             numberField.setEditable(true);
@@ -210,6 +285,11 @@ public class ChangeInformationPanel extends JPanel
             nameField.setText("");
             numberField.setText("");
             idField.setText("");
+            numberField.setEditable(false);
+            nameField.setEditable(false);
+            idField.setEditable(false);
+            
+            updateWorkerList();
          }
       }
    }

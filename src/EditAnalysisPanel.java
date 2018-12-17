@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -67,6 +68,7 @@ public class EditAnalysisPanel extends JPanel
       
       addButton = new JButton("Add");
       addButton.addActionListener(buttonListener);
+      addButton.setEnabled(false);
       
       deleteButton = new JButton("Delete");
       deleteButton.addActionListener(buttonListener);
@@ -125,6 +127,14 @@ public class EditAnalysisPanel extends JPanel
       {
          analysisList.setSelectedIndex(currentIndex);
       }
+      if (analysisList.getSelectedIndex()<0 || analysisList.getSelectedIndex()>analysises.size())
+      {
+         deleteButton.setEnabled(false);
+      }
+      else
+      {
+         deleteButton.setEnabled(true);
+      }
    }
 
    /*
@@ -142,19 +152,56 @@ public class EditAnalysisPanel extends JPanel
             matrixField.setText("");
             analysisField.setEditable(true);
             matrixField.setEditable(true);
+            addButton.setEnabled(true);
          }
          if (e.getSource() == addButton)
          {
             String analysis=analysisField.getText();
             String matrix=matrixField.getText();
             
-            adapter.addAnalysis(analysis, matrix);
+            AnalysisList analysisList=adapter.getAllAnalysis();
+            boolean sameAnal=false;
+            boolean emptyField=false;
             
-            updateAnalysisList();
+            for (int i=0;i<analysisList.size();i++)
+            {
+               if (analysis.equals(analysisList.get(i).getAnalysisType()) && matrix.equals(analysisList.get(i).getMatrix()))
+               {
+                  sameAnal = true;
+                  break;
+               }     
+            }
             
-            analysisField.setEditable(false);
-            matrixField.setEditable(false);
-         }
+            if (analysis.equals("") || matrix.equals(""))
+               emptyField=true;
+            
+            
+            
+            if (sameAnal==false && emptyField==false)
+            {
+               adapter.addAnalysis(analysis, matrix);
+               
+               updateAnalysisList();
+               
+               analysisField.setEditable(false);
+               matrixField.setEditable(false);
+               addButton.setEnabled(false);
+            }
+            else if (sameAnal==true)
+            {
+               JOptionPane.showMessageDialog(
+                     null,
+                     "Analysis with matrix already exists!",
+                     "Erorr", JOptionPane.ERROR_MESSAGE);
+            }
+            else if(emptyField==true)
+               {
+               JOptionPane.showMessageDialog(
+                     null,
+                     "One or more fields is empty!",
+                     "Erorr", JOptionPane.ERROR_MESSAGE);
+               }
+            }
          if (e.getSource()== deleteButton)
          {
             analysisField.setEditable(true);
@@ -171,6 +218,8 @@ public class EditAnalysisPanel extends JPanel
             matrixField.setText("");
             analysisField.setEditable(false);
             matrixField.setEditable(false);
+            
+            updateAnalysisList();
          }
       }
    }

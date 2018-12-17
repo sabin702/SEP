@@ -112,6 +112,7 @@ public class TrainingFileGUI extends JPanel
       deleteButton = new JButton("Delete");
       editButton = new JButton("Edit");
       saveButton = new JButton("Save");
+      saveButton.setEnabled(false);
       addButton.addActionListener(buttonListener);
       deleteButton.addActionListener(buttonListener);
       editButton.addActionListener(buttonListener);
@@ -272,6 +273,13 @@ public class TrainingFileGUI extends JPanel
       {
          trainingList.setSelectedIndex(currentIndex);
       }
+      
+      if (trainingList.getSelectedIndex()<0 || trainingList.getSelectedIndex()>trainings.getSize())
+      {
+         deleteButton.setEnabled(false);
+      }
+      else 
+         deleteButton.setEnabled(true);
    }
 
    private class MyButtonListener implements ActionListener
@@ -318,9 +326,67 @@ public class TrainingFileGUI extends JPanel
             Analysis analy = new Analysis(analysis, matrix);
             Worker work = new Worker(name, number, initials);
 
-            trainingAdapter.addTrainings(training, analy, work);
-            updateTrainingList();
-         }
+            TrainingList trainings= trainingAdapter.getAllTrainings();
+            boolean sameTraining=false;
+            boolean emptyField=false;
+            boolean sameAnalWork=false;
+            
+            for (int i=0;i<trainings.getSize();i++)
+            {
+               if (trainings.get(i).getWorker().equals(work) &&
+                     trainings.get(i).getAnalysis().equals(analy) &&
+                     trainings.get(i).getTrainingStatus().equals(training))
+               {
+                  sameTraining = true;
+                  break;
+               }     
+            }
+            
+            if (name.equals("") || number.equals("") || initials.equals("") || matrix.equals("") || analysis.equals("") || training.equals(""))
+            {
+               emptyField=true;
+            }
+            
+            for (int i=0;i<trainings.getSize();i++)
+            {
+               if (trainings.get(i).getWorker().equals(work) &&
+                     trainings.get(i).getAnalysis().equals(analy))
+               {
+                  sameAnalWork = true;
+                  break;
+               }     
+            }
+            
+            
+            if (sameTraining==false && emptyField==false && sameAnalWork==false)
+            {
+               trainingAdapter.addTrainings(training, analy, work);
+               updateTrainingList();
+            }
+            else if (sameTraining==true)
+            {
+               JOptionPane.showMessageDialog(
+                     null,
+                     "Training already exists!",
+                     "Erorr", JOptionPane.ERROR_MESSAGE);
+            }
+            else if(emptyField==true)
+               {
+               JOptionPane.showMessageDialog(
+                     null,
+                     "One or more fields is empty!",
+                     "Erorr", JOptionPane.ERROR_MESSAGE);
+               }
+            else if (sameAnalWork==true)
+            {
+               {
+                  JOptionPane.showMessageDialog(
+                        null,
+                        "Worker with the given analysis already has a training status!",
+                        "Erorr", JOptionPane.ERROR_MESSAGE);
+                  }
+            }
+            }
          if (e.getSource() == deleteButton)
          {
 
@@ -351,6 +417,7 @@ public class TrainingFileGUI extends JPanel
             trainingStatusField.setEditable(true);
             workerBox.setEnabled(false);
             analysisBox.setEnabled(false);
+            saveButton.setEnabled(true);
          }
          if (e.getSource() == saveButton)
          {
@@ -370,6 +437,16 @@ public class TrainingFileGUI extends JPanel
             Analysis analy = new Analysis(analysis, matrix);
             Worker work = new Worker(name, number, initials);
             
+            boolean emptyField=false;
+            
+            if (name.equals("") || number.equals("") || initials.equals("") || matrix.equals("") || analysis.equals("") || training.equals(""))
+            {
+               emptyField=true;
+            }
+            
+            if (emptyField==false)
+            {
+
             for (int i=0;i<trainings.getSize();i++) 
             {
                if(trainings.get(i).getWorker().equals(work) 
@@ -395,7 +472,17 @@ public class TrainingFileGUI extends JPanel
             numberField.setText("");
             trainingStatusField.setText("");
             updateTrainingList();
-
+            
+            saveButton.setEnabled(false);
+            }
+            else
+            {
+               JOptionPane.showMessageDialog(
+                     null,
+                     "Training status text field is empty",
+                     "Erorr", JOptionPane.PLAIN_MESSAGE);
+               saveButton.setEnabled(true);
+            }
          }
       }
    }

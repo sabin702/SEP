@@ -53,7 +53,7 @@ public class Training implements Serializable
 
    public String toString()
    {
-      return trainingStatus + " " + analysis + " " + worker;
+      return worker+" | "+analysis+" | "+trainingStatus;
    }
 
    public boolean equals(Object obj)
