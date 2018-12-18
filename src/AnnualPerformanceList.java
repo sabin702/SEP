@@ -62,7 +62,7 @@ public class AnnualPerformanceList implements Serializable
          if(comments.get(i).matchComment(initials, name))
             return comments.get(i).getComment();
       }
-      return "";
+      return "nothing";
    }
 
    public boolean equals(Object obj)

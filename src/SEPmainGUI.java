@@ -85,12 +85,12 @@ public class SEPmainGUI extends JFrame
       
       tabpane=new JTabbedPane();
 
+      tabpane.addTab("Work Plan", workPlanPanel);
+      tabpane.addTab("Weekly Plan", weeklyPlanPanel);
       tabpane.addTab("Edit Worker", changeInformationPanel);
       tabpane.addTab("Edit Analysis", editAnalysisPanel);
       tabpane.addTab("Edit Training", editTrainingPanel);
       tabpane.addTab("Edit AnnualPrefrence", editAnnualPerformacePrefrence);
-      tabpane.addTab("Weekly Plan", weeklyPlanPanel);
-      tabpane.addTab("Work Plan", workPlanPanel);
       tabpane.addChangeListener(tabListener);
       
       add(tabpane);
@@ -135,32 +135,31 @@ public class SEPmainGUI extends JFrame
    {
       public void stateChanged(ChangeEvent e)
       {
-         if(((JTabbedPane)e.getSource()).getSelectedIndex()==0)
+         if (((JTabbedPane)e.getSource()).getSelectedIndex() == 0)
+         {
+            weeklyPlanPanel.updateWeeklyPlanTable();
+         }
+         if (((JTabbedPane)e.getSource()).getSelectedIndex() == 1)
+         {
+            workPlanPanel.updateWorkPlanTable();
+         }
+         if(((JTabbedPane)e.getSource()).getSelectedIndex()==2)
          {
             changeInformationPanel.updateWorkerList();
          } 
-         if (((JTabbedPane)e.getSource()).getSelectedIndex()==1)
+         if (((JTabbedPane)e.getSource()).getSelectedIndex()==3)
          {
             editAnalysisPanel.updateAnalysisList();
          }
-         if (((JTabbedPane)e.getSource()).getSelectedIndex() == 2) {
+         if (((JTabbedPane)e.getSource()).getSelectedIndex() == 4) {
             editTrainingPanel.updateTrainingList();
             editTrainingPanel.updateAnalysisBox();
             editTrainingPanel.updateWorkerBox();
          }
-         if (((JTabbedPane)e.getSource()).getSelectedIndex() == 3)
+         if (((JTabbedPane)e.getSource()).getSelectedIndex() == 5)
          {
             editAnnualPerformacePrefrence.updateAnnualPerformanceList();
             editAnnualPerformacePrefrence.updateWorkerBox();
-         }
-         if (((JTabbedPane)e.getSource()).getSelectedIndex() == 4)
-         {
-            weeklyPlanPanel.updateWeeklyPlanTable();
-         }
-         if (((JTabbedPane)e.getSource()).getSelectedIndex() == 5)
-         {
-            workPlanPanel.updateWorkPlanTable();
-            workPlanPanel.changeEditableState(false);
          }
       }
    }
