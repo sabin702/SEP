@@ -76,9 +76,7 @@ public class WorkPlanPanel extends JPanel
             java.awt.Point point = e.getPoint();
             int rowIndex = rowAtPoint(point);
             int colIndex = columnAtPoint(point);
-            for (int i = 0;i<workPlanTable.getModel().getRowCount();i++) {
-               
-            }
+          
             String initials = (String)workPlanTable.getModel().getValueAt(rowIndex, 0);
             String name = (String)workPlanTable.getModel().getValueAt(rowIndex, 1);
             String comment = annuals.getComment(initials, name);
