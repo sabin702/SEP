@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 /**
- * A class containing the current Date
+ * A class with the date parameters
  * @author Sabin Sirbu
  * @version 1.0
  */
