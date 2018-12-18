@@ -13,6 +13,11 @@ public class WeeklyPlanList implements Serializable
       weeklyPlans.add(weeklyPlan);
    }
    
+   public void addWeeklyPlanByIndex(int index, WeeklyPlan weeklyplan)
+   {
+      weeklyPlans.add(index, weeklyplan);
+   }
+   
    public void remove(WeeklyPlan weeklyPlan) {
       weeklyPlans.remove(weeklyPlan);
    }

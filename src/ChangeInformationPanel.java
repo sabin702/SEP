@@ -258,6 +258,7 @@ public class ChangeInformationPanel extends JPanel
                      null,
                      "Worker already exists!",
                      "Erorr", JOptionPane.ERROR_MESSAGE);
+               addButton.setEnabled(false);
             }
             else if(emptyField==true)
                {
@@ -266,6 +267,7 @@ public class ChangeInformationPanel extends JPanel
                      "One or more fields is empty!",
                      "Erorr", JOptionPane.ERROR_MESSAGE);
                }
+            addButton.setEnabled(false);
             }
          
          if (e.getSource()== deleteButton)

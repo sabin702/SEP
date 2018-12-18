@@ -74,7 +74,7 @@ public class WeeklyPlanPanel extends JPanel
       dtm = new DefaultTableModel(columnNames, 0);
       
       weeklyPlanTable = new JTable(dtm);
-      weeklyPlanTable.setEnabled(false);
+      weeklyPlanTable.setEnabled(true);
       weeklyPlanTable.getTableHeader().setReorderingAllowed(false);
       weeklyPlanTable.getTableHeader().setResizingAllowed(false);
       weeklyPlanTable.setPreferredScrollableViewportSize(new Dimension(700, weeklyPlanTable.getRowHeight()*18));
@@ -96,25 +96,16 @@ public class WeeklyPlanPanel extends JPanel
       saveButton = new JButton("Save");
       saveButton.addActionListener(buttonListener);
       
+      
       add(getButton);
       add(saveButton);
    }
    
-   /**
-    * Enables or disables editing of the allStudentsTable.
-    * @param bool if true then the table will be editable, if false then it will not
-    */
-   public void changeEditableState(boolean bool)
-   {
-     weeklyPlanTable.setEnabled(bool);
-     weeklyPlanTable.clearSelection();
-   }
-   
    public void saveWeeklyPlanTable()
    {
-      
-for (int i = 0; i < weeklyPlanTable.getModel().getRowCount(); i++)
+      for (int i = 0; i < weeklyPlanTable.getModel().getRowCount(); i++)
 {
+   
   String mName = (String)weeklyPlanTable.getModel().getValueAt(i, 0);
   String wType = (String)weeklyPlanTable.getModel().getValueAt(i, 1);
   String aName = (String)weeklyPlanTable.getModel().getValueAt(i, 2);
@@ -127,16 +118,7 @@ for (int i = 0; i < weeklyPlanTable.getModel().getRowCount(); i++)
 
 System.out.println(mName + " " + wType + " " + aName+ " " + moNumber + " " + tuNumber + " " + weNumber + " " + thNumber + " " + frNumber + " " + saNumber);
 
-Analysis a = new Analysis(aName, mName);
 double[] emp = new double[6];
-/*for (int j=0;j<emp.length;j++) {
-   if(weeklyPlanTable.getModel().getValueAt(i, j+3) == null)
-      emp[j] = 23;
-   else {
-      String value = (String)weeklyPlanTable.getModel().getValueAt(i, j+3);
-      emp[j] =Double.parseDouble(value);
-   }
-}*/
 
 emp[0] = Double.parseDouble(moNumber);
 emp[1] = Double.parseDouble(tuNumber);
@@ -145,12 +127,11 @@ emp[3] = Double.parseDouble(thNumber);
 emp[4] = Double.parseDouble(frNumber);
 emp[5] = Double.parseDouble(saNumber);
 
-adapter.changeWeeklyPlan(a, wType, emp);
-//adapter.addWeeklyPlan(new WeeklyPlan(a, wType, emp));
+
+adapter.addWeeklyPlan(i,new WeeklyPlan(new Analysis(aName,mName),wType,emp));
 
 }
    }
-   
    /**
     * Updates the allStudentsTable JTable with information from the students file
     */
@@ -189,62 +170,35 @@ adapter.changeWeeklyPlan(a, wType, emp);
          tableSize++;
          }
       }
-      
+   
       dtm = new DefaultTableModel(data, columnNames);
       
       weeklyPlanTable.setModel(dtm);
+      
       TableColumn[] columns = new TableColumn[6];
       String[] values = {"0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4"};
-      for (int i = 0; i < columns.length; i++)
+      for (int i = 0; i < 6; i++)
       {
-         columns[i] = weeklyPlanTable.getColumnModel().getColumn(i+3);
+        columns[i] = weeklyPlanTable.getColumnModel().getColumn(i+3);
          columns[i].setCellEditor(new MyComboBoxEditor(values));
-         //columns[i].setCellRenderer(new MyComboBoxRender(values));
       }
-      
-      Analysis analysis;
-      
+
       for (int i = 0; i < weeklyPlanTable.getModel().getRowCount(); i++)
       {
-         //String analysisType = (String)weeklyPlanTable.getModel().getValueAt(i, 2);
-         //String matrix = (String) weeklyPlanTable.getModel().getValueAt(i, 0);
-         //String weekType = (String) weeklyPlanTable.getModel().getValueAt(i, 1);
-         
-         //analysis = new Analysis(analysisType, matrix);
-         
-         //int index = weeklyPlans.getIndex(analysis, weekType);
          String[] weeklyNumber = new String[6];
          
          
-         for(int n=0; n<weeklyNumber.length;n++) {
+         for(int n=0; n<6;n++) {
             if (weeklyPlans.get(i) != null)
                weeklyNumber[n] = String.valueOf(weeklyPlans.get(i).getWeeklyEmployee(n));
-            else
+            else 
                weeklyNumber[n] = "0";
          }
          
          
-         for(int m=0; m<weeklyNumber.length;m++) {
+         for(int m=0; m<6;m++) {
                weeklyPlanTable.getModel().setValueAt(weeklyNumber[m], i, m+3);
          }
-        /* 
-         if (index != (-1))
-         {
-         weeklyPlanTable.getModel().setValueAt(weeklyPlans.get(index).getWeeklyEmployee(0), i, 3);
-         weeklyPlanTable.getModel().setValueAt(weeklyPlans.get(index).getWeeklyEmployee(1), i, 4);
-         weeklyPlanTable.getModel().setValueAt(weeklyPlans.get(index).getWeeklyEmployee(2), i, 5);
-         weeklyPlanTable.getModel().setValueAt(weeklyPlans.get(index).getWeeklyEmployee(3), i, 6);
-         weeklyPlanTable.getModel().setValueAt(weeklyPlans.get(index).getWeeklyEmployee(4), i, 7);
-         weeklyPlanTable.getModel().setValueAt(weeklyPlans.get(index).getWeeklyEmployee(5), i, 8);
-         }
-         else {
-            weeklyPlanTable.getModel().setValueAt(1, i, 3);
-            weeklyPlanTable.getModel().setValueAt(1, i, 4);
-            weeklyPlanTable.getModel().setValueAt(1, i, 5);
-            weeklyPlanTable.getModel().setValueAt(1, i, 6);
-            weeklyPlanTable.getModel().setValueAt(1, i, 7);
-            weeklyPlanTable.getModel().setValueAt(1, i, 8);
-         }*/
       }
    }  
    

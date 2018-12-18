@@ -73,23 +73,34 @@ public class WeeklyPlanFileAdapter
          {
             for (int j = 0; j < numberOfEmpployees.length; j++)
             {
-               if(weeklyPlans.get(i).getNumberOfEmployees(j) == numberOfEmpployees[j])
+               if(weeklyPlans.get(i).getWeeklyEmployee(j) == numberOfEmpployees[j])
                   return true;
-               else
-                  return false;
             }
          }
       }
       return false;
    }
    
-   public void addWeeklyPlan(WeeklyPlan weeklyPlan)
+   public void addWeeklyPlan(int i,WeeklyPlan weeklyPlan)
    {
       WeeklyPlanList weeklyPlans= getAllWeeklyPlans();
       
-      weeklyPlans.addWeeklyPlan(weeklyPlan);
+      weeklyPlans.addWeeklyPlanByIndex(i, weeklyPlan);
+
       
       saveWeeklyPlans(weeklyPlans);
    }
    
+   
+   public void deleteWeeklyPlans()
+   {
+      WeeklyPlanList weeklyPlans= getAllWeeklyPlans();
+      
+      for (int i=0;i<weeklyPlans.size();i++)
+      {
+         weeklyPlans.remove(i);
+      }
+      
+      saveWeeklyPlans(weeklyPlans);
+   }
 }

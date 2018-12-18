@@ -23,12 +23,7 @@ public class WeeklyPlan implements Serializable
    public void setWeekSize(String weekSize) {
       this.weekSize = weekSize;
    }
-   
-   public double getNumberOfEmployees(int index) {
-      //return numberOfEmployees;
-      return weeklyEmployees[index];
-   }
-   
+    
    public void setNumberOfEmployees(int index, double numberOfEmployees) {
       weeklyEmployees[index] = numberOfEmployees;
    }

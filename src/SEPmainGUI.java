@@ -156,7 +156,6 @@ public class SEPmainGUI extends JFrame
          if (((JTabbedPane)e.getSource()).getSelectedIndex() == 4)
          {
             weeklyPlanPanel.updateWeeklyPlanTable();
-            weeklyPlanPanel.changeEditableState(true);
          }
          if (((JTabbedPane)e.getSource()).getSelectedIndex() == 5)
          {
