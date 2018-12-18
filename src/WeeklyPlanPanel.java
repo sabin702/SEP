@@ -19,6 +19,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+/**
+ * A user interface that allows for displaying and modifying weekly plan information.
+ * @author Sabin Sirbu and Kresimir Bosnjak
+ * @version 1.0
+ */
+
 public class WeeklyPlanPanel extends JPanel
 {
    private WeeklyPlanFileAdapter adapter;
@@ -42,7 +48,8 @@ public class WeeklyPlanPanel extends JPanel
    
    /**
     * Constructor initializing the GUI components
-    * @param adapter StudentFileAdapter object used for retrieving and storing student information
+    * @param adapter WeeklyPlanFileAdapter object used for retrieving and storing weekly plan information
+    * @param analysisFileAdapter object used for retrieving analysis information
     */
    public WeeklyPlanPanel(WeeklyPlanFileAdapter adapter, AnalysisFileAdapter analysisFileAdapter)
    {
@@ -101,6 +108,9 @@ public class WeeklyPlanPanel extends JPanel
       add(saveButton);
    }
    
+   /**
+    * Saves the weeklyPlanTable JTable information in the weekly plan file
+    */
    public void saveWeeklyPlanTable()
    {
       for (int i = 0; i < weeklyPlanTable.getModel().getRowCount(); i++)
@@ -133,7 +143,7 @@ public class WeeklyPlanPanel extends JPanel
       }
    }
    /**
-    * Updates the allStudentsTable JTable with information from the students file
+    * Updates the weeklyPlanTable JTable with information from the weekly plan file
     */
    public void updateWeeklyPlanTable()
    {
@@ -204,8 +214,8 @@ public class WeeklyPlanPanel extends JPanel
    
    /*
     * Inner action listener class 
-    * @author Allan Henriksen
-    * @version 3.0
+    * @author Sabin Sirbu and Kresimir Bosnjak
+    * @version 1.0
     */
    private class MyButtonListener implements ActionListener
    {

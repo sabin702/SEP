@@ -29,6 +29,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.ListSelectionModel;
 
+/**
+ * A user interface that allows for displaying,modifying and adding training information.
+ * @author Aleksander Bialik
+ * @version 1.0
+ */
+
 public class TrainingFileGUI extends JPanel
 {
    private TrainingFileAdapter trainingAdapter;
@@ -78,14 +84,16 @@ public class TrainingFileGUI extends JPanel
    private JLabel numberLabel;
    private JLabel matrixLabel;
 
+   /**
+    * Constructor initializing the GUI components
+    * @param adapter AnalysisFileAdapter object used for retrieving analysis information
+    * @param workerAdapter object used for retrieving worker information
+    * @param trainingAdapter object used for retrieving and storing training information
+    */
+   
    public TrainingFileGUI(AnalysisFileAdapter analysisAdapter,
          WorkerFileAdapter workerAdapter, TrainingFileAdapter trainingAdapter)
    {
-      // super("Training File Adapter GUI 69.420");
-      // trainingAdapter = new TrainingFileAdapter("training.bin");
-      // analysisAdapter = new AnalysisFileAdapter("analysis.bin");
-      // workerAdapter = new WorkerFileAdapter("worker.bin");
-
       this.analysisAdapter = analysisAdapter;
       this.workerAdapter = workerAdapter;
       this.trainingAdapter = trainingAdapter;
@@ -202,13 +210,12 @@ public class TrainingFileGUI extends JPanel
       add(mainPanel);
       setSize(575, 452);
       setVisible(true);
-      // setResizable(false);
-
-      // setDefaultCloseOperation(EXIT_ON_CLOSE);
-      // setLocationRelativeTo(null);
-
    }
 
+   /**
+    * Updates the analysisBox JComboBox with information from the analysis file
+    */
+   
    public void updateAnalysisBox()
    {
       int currentIndex = analysisBox.getSelectedIndex();
@@ -230,6 +237,10 @@ public class TrainingFileGUI extends JPanel
          analysisBox.setSelectedIndex(currentIndex);
       }
    }
+   
+   /**
+    * Updates the workerBox JComboBox with information from the worker file
+    */
 
    public void updateWorkerBox()
    {
@@ -252,6 +263,10 @@ public class TrainingFileGUI extends JPanel
          workerBox.setSelectedIndex(currentIndex);
       }
    }
+   
+   /**
+    * Updates the trainingList JList with information from the training file
+    */
 
    public void updateTrainingList()
    {
@@ -281,6 +296,12 @@ public class TrainingFileGUI extends JPanel
       else 
          deleteButton.setEnabled(true);
    }
+   
+   /*
+    * Inner action listener class 
+    * @author Aleksander Bialik
+    * @version 1.0
+    */
 
    private class MyButtonListener implements ActionListener
    {

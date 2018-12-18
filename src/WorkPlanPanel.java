@@ -18,6 +18,11 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.text.TableView.TableRow;
 
+/**
+ * A user interface that allows for displaying and modifying work plan information.
+ * @author Sabin Sirbu and Aleksander Bialik
+ * @version 1.0
+ */
 public class WorkPlanPanel extends JPanel
 {
    private WorkPlanAdapter adapter;
@@ -28,7 +33,7 @@ public class WorkPlanPanel extends JPanel
   
    private JTable workPlanTable;
    private String[] columnNames;
-  // private String[] commentsRow;
+
    private MyDate date;
    private DefaultTableModel dtm;
    private JScrollPane workPlanScrollPane;
@@ -41,7 +46,10 @@ public class WorkPlanPanel extends JPanel
    
    /**
     * Constructor initializing the GUI components
-    * @param adapter StudentFileAdapter object used for retrieving and storing student information
+    * @param adapter WorkPlanAdapter object used for retrieving and storing work plan information
+    * @param workerAdapter object used for retrieving worker information
+    * @param annualAdapter object used for retrieving annual performance preferences information
+    * @param trainingAdapter object used for retrieving training information
     */
    public WorkPlanPanel(WorkPlanAdapter adapter, WorkerFileAdapter workerAdapter, AnnualPerformanceAdapter annualAdapter, TrainingFileAdapter trainingAdapter)
    {
@@ -113,7 +121,7 @@ public class WorkPlanPanel extends JPanel
    }
    
    /**
-    * Enables or disables editing of the allStudentsTable.
+    * Enables or disables editing of the workPlanTable.
     * @param bool if true then the table will be editable, if false then it will not
     */
    public void changeEditableState(boolean bool)
@@ -122,6 +130,9 @@ public class WorkPlanPanel extends JPanel
      workPlanTable.clearSelection();
    }
    
+   /**
+    * Saves the workPlanTable JTable information in the work plan file
+    */
    
    public void saveWorkPlanTable()
    {
@@ -151,7 +162,7 @@ public class WorkPlanPanel extends JPanel
    }
    
    /**
-    * Updates the allStudentsTable JTable with information from the students file
+    * Updates the workPlanTable JTable with information from the workplan file
     */
    public void updateWorkPlanTable()
    {
@@ -202,8 +213,8 @@ public class WorkPlanPanel extends JPanel
    
    /*
     * Inner action listener class 
-    * @author Allan Henriksen
-    * @version 3.0
+    * @author Sabin Sirbu
+    * @version 1.0
     */
    private class MyButtonListener implements ActionListener
    {
