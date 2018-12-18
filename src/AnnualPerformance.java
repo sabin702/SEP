@@ -15,9 +15,24 @@ public class AnnualPerformance implements Serializable
       return comment;   
    }
    
+   //This method was added by Sabin today
+   public boolean matchComment(String initials, String name) {
+      if(worker.getInitials().equals(initials) && worker.getName().equals(name))
+         return true;
+      else 
+         return false;
+   }
+   
    public Worker getWorker()
    {
       return worker;
+   }
+   
+   public String getComment(Worker worker) {
+      if (this.worker.equals(worker))
+         return comment;
+      else 
+         return "";
    }
 
    public void setWorker(Worker worker)

@@ -44,16 +44,26 @@ public class WorkPlanAdapter
       }
    }
    
-   public void changeWorkPlan(Worker worker, AnnualPerformance annualPerformance, TrainingList trainings)
+   public void changeWorkPlan(String initials, String name, String[] analyses)
    {
       WorkPlanList workPlans = getAllWorkPlans();
       
       for (int i = 0; i < workPlans.size(); i++)
       {
-         if(workPlans.get(i).getWorker().equals(worker)) 
+         if(workPlans.get(i).getWorkerInitials().equals(initials) 
+               && workPlans.get(i).getWorkerName().equals(name)) 
          {
-           workPlans.get(i).setTrainings(trainings);
+           workPlans.get(i).setAnalyses(analyses);
          }
       }
+   }
+   
+   public void addWorkPlan(int index,WorkPlan workPlan)
+   {
+      WorkPlanList workPlans= getAllWorkPlans();
+      
+      workPlans.addWorkPlanByIndex(index, workPlan);
+
+      saveWorkPlans(workPlans);
    }
 }

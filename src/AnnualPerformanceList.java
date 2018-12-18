@@ -54,6 +54,16 @@ public class AnnualPerformanceList implements Serializable
    {
       return comments.get(index);
    }
+   
+   
+   //This methos was added by Sabin today
+   public String getComment(String initials, String name) {
+      for(int i = 0;i<comments.size();i++) {
+         if(comments.get(i).matchComment(initials, name))
+            return comments.get(i).getComment();
+      }
+      return "";
+   }
 
    public boolean equals(Object obj)
    {

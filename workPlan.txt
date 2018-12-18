@@ -1,1 +1,1 @@
-Carlos,1,CG,Wants to be rich,trained,Protein,Food,under training,Milk,Feed,trained,Pig,Food,under training,Cattle,Food,trained,Strach,Food
+CG,Carlos,Protein (Food),Milk (Feed),Pig (Food),Cattle (Food),Strach (Food)

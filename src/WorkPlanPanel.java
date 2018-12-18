@@ -76,8 +76,9 @@ public class WorkPlanPanel extends JPanel
             java.awt.Point point = e.getPoint();
             int rowIndex = rowAtPoint(point);
             int colIndex = columnAtPoint(point);
-            //int realColumnIndex = convertColumnIndexToModel(colIndex);
-            //tip = workPlans.get(rowIndex).getWorker().getName() + " " + workPlans.get(rowIndex).getAnnualPerformance().getComment();
+            for (int i = 0;i<workPlanTable.getModel().getRowCount();i++) {
+               
+            }
             tip = annuals.getAnnualPerformance(rowIndex).getWorker().getName() + " prefers to: " +  annuals.getAnnualPerformance(rowIndex).getComment();
             return tip;
          }
@@ -122,7 +123,29 @@ public class WorkPlanPanel extends JPanel
    
    public void saveWorkPlanTable()
    {
-      WorkPlanList workPlans = adapter.getAllWorkPlans();
+      for (int i = 0; i < workPlanTable.getModel().getRowCount(); i++)
+      {
+   
+         String initials = (String)workPlanTable.getModel().getValueAt(i, 0);
+         String name = (String)workPlanTable.getModel().getValueAt(i, 1);
+         String analysis1 =  (String)workPlanTable.getModel().getValueAt(i, 2);
+         String analysis2 = (String)workPlanTable.getModel().getValueAt(i, 3);
+         String analysis3 =  (String)workPlanTable.getModel().getValueAt(i, 4);
+         String analysis4 = (String)workPlanTable.getModel().getValueAt(i, 5);
+         String analysis5 =  (String)workPlanTable.getModel().getValueAt(i, 6);
+
+         System.out.println(initials + " " + name + " " + analysis1 + " " + analysis2 + " " + analysis3 + " " + analysis4 + " " + analysis5);
+
+         String[] analyses = new String[5];
+         analyses[0] = analysis1;
+         analyses[1] = analysis2;
+         analyses[2] = analysis3;
+         analyses[3] = analysis4;
+         analyses[4] = analysis5;
+
+         adapter.addWorkPlan(i,new WorkPlan(initials, name, analyses));
+
+      }
    }
    
    /**
@@ -130,22 +153,16 @@ public class WorkPlanPanel extends JPanel
     */
    public void updateWorkPlanTable()
    {
-      //WorkPlanList workPlans = adapter.getAllWorkPlans();
-     // WorkersList workers = workerAdapter.getAllWorkers();
+      WorkPlanList workPlans = adapter.getAllWorkPlans();
+      WorkersList workers = workerAdapter.getAllWorkers();
       AnnualPerformanceList annuals = annualAdapter.getAllAnnualPerformance();
       TrainingList trainings = trainingAdapter.getAllTrainings();
-      Object[][] data = new Object[annuals.getSize()][7];
+      Object[][] data = new Object[trainings.getSize()][7];
       
-      for(int i = 0; i<annuals.getSize();i++)
+      for(int i = 0; i<workers.size();i++)
       {
-         data[i][0] = annuals.getAnnualPerformance(i).getWorker().getInitials();
-         data[i][1] = annuals.getAnnualPerformance(i).getWorker().getName();
-         
-        /* for (int j=0;j<workPlans.get(i).getTrainings().getSize();j++) {
-            data[i][j+2] = workPlans.get(i).getTrainings().get(j).getAnalysis() + " (" 
-         + workPlans.get(i).getTrainings().get(j).getAnalysis() + ")";
-         }*/
-         
+         data[i][0] =   workers.get(i).getInitials();
+         data[i][1] = workers.get(i).getName();
       }
       dtm = new DefaultTableModel(data, columnNames);
       
@@ -160,16 +177,25 @@ public class WorkPlanPanel extends JPanel
       }
       
       TableColumn[] columns = new TableColumn[5];
-      //TableRow[] rows = new TableRow[annuals.getSize()];
       for (int i = 0; i < columns.length; i++)
       {
-         /*columns[i] = workPlanTable.getColumnModel().getColumn(i+2);
-         columns[i].setCellEditor(new MyComboBoxEditor(analyses));
-         columns[i].setCellRenderer(new MyComboBoxRender(analyses));*/
-         //rows[i] = workPlanTable.getRow;
          columns[i] = workPlanTable.getColumnModel().getColumn(i+2);
          columns[i].setCellEditor(new MyComboBoxEditor(analyses));
-         columns[i].setCellRenderer(new MyComboBoxRender(analyses));
+      }
+      
+      for (int j= 0; j< workPlanTable.getModel().getRowCount();j++) {
+         String[] analysesList = new String[trainings.getSize()];
+         
+         for(int n=0;n<analysesList.length;n++) {
+            if(workPlans.get(j) != null)
+               analysesList[n] = workPlans.get(j).getAnalysis(n);
+            else
+               analysesList[n] = "No analysis";
+         }
+         
+         for(int m=0; m<analysesList.length;m++) {
+            workPlanTable.getModel().setValueAt(analyses[m], j, m+2);
+         }
       }
    }  
    

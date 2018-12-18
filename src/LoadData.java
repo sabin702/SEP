@@ -236,18 +236,16 @@ public class LoadData
             String temp = workPlanArray[i];
             String[] tempArr = temp.split(",");
          
-            String name = tempArr[0];
-            String number = tempArr[1];
-            String initials = tempArr[2];
-            String comment = tempArr[3];
-            Worker worker = new Worker(name, number, initials);
-            TrainingList trainingList= new TrainingList();
-            for (int j = 1; j < trainingList.getSize(); j++)
+            String initials = tempArr[0];
+            String name = tempArr[1];
+            String[] analyses = new String[5];
+            
+            for (int j = 0; j < analyses.length; j++)
             {
-               trainingList.addTraining(tempArr[3*j+1], new Analysis(tempArr[3*j+2], tempArr[3*j+3]), worker);
+               analyses[j] = tempArr[j+2];
             }
             
-            workPlans.addWorkPlan(new WorkPlan(worker, new AnnualPerformance(comment, worker), trainingList));
+            workPlans.addWorkPlan(new WorkPlan(initials, name, analyses));
          }
          
       }

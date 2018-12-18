@@ -104,33 +104,33 @@ public class WeeklyPlanPanel extends JPanel
    public void saveWeeklyPlanTable()
    {
       for (int i = 0; i < weeklyPlanTable.getModel().getRowCount(); i++)
-{
+      {
    
-  String mName = (String)weeklyPlanTable.getModel().getValueAt(i, 0);
-  String wType = (String)weeklyPlanTable.getModel().getValueAt(i, 1);
-  String aName = (String)weeklyPlanTable.getModel().getValueAt(i, 2);
-  String moNumber =  (String)weeklyPlanTable.getModel().getValueAt(i, 3);
-  String tuNumber = (String)weeklyPlanTable.getModel().getValueAt(i, 4);
-  String weNumber =  (String)weeklyPlanTable.getModel().getValueAt(i, 5);
-  String thNumber = (String)weeklyPlanTable.getModel().getValueAt(i, 6);
-  String frNumber =  (String)weeklyPlanTable.getModel().getValueAt(i, 7);
-  String saNumber =  (String)weeklyPlanTable.getModel().getValueAt(i, 8);
+         String mName = (String)weeklyPlanTable.getModel().getValueAt(i, 0);
+         String wType = (String)weeklyPlanTable.getModel().getValueAt(i, 1);
+         String aName = (String)weeklyPlanTable.getModel().getValueAt(i, 2);
+         String moNumber =  (String)weeklyPlanTable.getModel().getValueAt(i, 3);
+         String tuNumber = (String)weeklyPlanTable.getModel().getValueAt(i, 4);
+         String weNumber =  (String)weeklyPlanTable.getModel().getValueAt(i, 5);
+         String thNumber = (String)weeklyPlanTable.getModel().getValueAt(i, 6);
+         String frNumber =  (String)weeklyPlanTable.getModel().getValueAt(i, 7);
+         String saNumber =  (String)weeklyPlanTable.getModel().getValueAt(i, 8);
 
-System.out.println(mName + " " + wType + " " + aName+ " " + moNumber + " " + tuNumber + " " + weNumber + " " + thNumber + " " + frNumber + " " + saNumber);
+         System.out.println(mName + " " + wType + " " + aName+ " " + moNumber + " " + tuNumber + " " + weNumber + " " + thNumber + " " + frNumber + " " + saNumber);
 
-double[] emp = new double[6];
+         double[] emp = new double[6];
 
-emp[0] = Double.parseDouble(moNumber);
-emp[1] = Double.parseDouble(tuNumber);
-emp[2] = Double.parseDouble(weNumber);
-emp[3] = Double.parseDouble(thNumber);
-emp[4] = Double.parseDouble(frNumber);
-emp[5] = Double.parseDouble(saNumber);
+         emp[0] = Double.parseDouble(moNumber);
+         emp[1] = Double.parseDouble(tuNumber);
+         emp[2] = Double.parseDouble(weNumber);
+         emp[3] = Double.parseDouble(thNumber);
+         emp[4] = Double.parseDouble(frNumber);
+         emp[5] = Double.parseDouble(saNumber);
 
 
-adapter.addWeeklyPlan(i,new WeeklyPlan(new Analysis(aName,mName),wType,emp));
+         adapter.addWeeklyPlan(i,new WeeklyPlan(new Analysis(aName,mName),wType,emp));
 
-}
+      }
    }
    /**
     * Updates the allStudentsTable JTable with information from the students file
