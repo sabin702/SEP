@@ -11,7 +11,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-
+/**
+ * A user interface that allows for displaying and modifying information about workers,analyses,training, annual preferences, work plan and weekly plan
+ * @author Group 3
+ * @version 1.0
+ */
 
 public class SEPmainGUI extends JFrame
 {
@@ -41,10 +45,12 @@ public class SEPmainGUI extends JFrame
    private EditAnnualPerformacePrefrence editAnnualPerformacePrefrence;
    private WeeklyPlanPanel weeklyPlanPanel;
    private WorkPlanPanel workPlanPanel;
-   
+   /**
+    * No-argument constructor initializing the GUI components 
+    */
    public SEPmainGUI()
    {
-      super ("SEP GUI TEST");
+      super ("Group 3 semester project");
       
       adapter = new AnalysisFileAdapter("analysis.bin");
       workeradapter = new WorkerFileAdapter("workers.bin");
@@ -102,7 +108,11 @@ public class SEPmainGUI extends JFrame
       setLocationRelativeTo(null);
       
    }
-   
+   /*
+    * Inner action listener class 
+    * @author Group 3
+    * @version 1.0
+    */
    private class MyButtonListener implements ActionListener
    {
       public void actionPerformed(ActionEvent e)
@@ -130,7 +140,11 @@ public class SEPmainGUI extends JFrame
       }
       
    }
-   
+   /*
+    * Inner action listener class 
+    * @author Group 3
+    * @version 1.0
+    */
    private class MyTabListener implements ChangeListener
    {
       public void stateChanged(ChangeEvent e)

@@ -1,7 +1,11 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-
+/**
+ * A simple program used for importing data
+ * @author Group 3
+ * @version 1.0
+ */
 
 public class LoadData
 {

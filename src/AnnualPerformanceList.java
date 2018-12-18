@@ -1,13 +1,17 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-
+/**
+ * A class containing a list of Annual Performance objects
+ * @author Lucian Rafa, Aleksander Bialik
+ * @version 1.0
+ */
 public class AnnualPerformanceList implements Serializable
 {
 
    private ArrayList<AnnualPerformance> comments;
 
-   /*
-    * A contructor which takes elements of type AnnualPerformance
+   /**
+    * No-argument constructor initializing the AnnualPerformanceList
     */
    public AnnualPerformanceList()
    {
@@ -15,11 +19,8 @@ public class AnnualPerformanceList implements Serializable
    }
 
    /**
-    * A method that adds an employee's preference to the list of preferences or
-    * perfomanceList
-    * 
-    * @param annualPerformance
-    *           the employee's preference to add to the list
+    * Adds an AnnualPerformance to the list
+    * @param annualPerformance the annualPerformance to add to the list
     */
    public void addAnnualPerformance(AnnualPerformance annualPerformance)
    {
@@ -27,36 +28,47 @@ public class AnnualPerformanceList implements Serializable
    }
 
    /**
-    * @param annualPerformance
+    * Removes the AnnualPerformance from the list
+    * @param annual the annualPerformance to delete from the list
     */
    
    public void removeAnnualPerformance(AnnualPerformance annual)
    {
       comments.remove(annual);
    }
-
-   public void sortByName()
-   {
-
-   }
-
+/**
+ * Gets the number of the AnnualPerformance objects in the list
+ * @return the number of the AnnualPerformance objects in the list
+ */
    public int getSize()
    {
       return comments.size();
    }
-   
+   /**
+    * Removes the AnnualPerformance object from the given position in the list
+    * @param i the position of the AnnualPerformance object in the list
+    */
    public void removeIndex(int i)
    {
       comments.remove(i);
    }
-
+/**
+ * Gets the AnnualPerformance object from a given position in the list
+ * @param index the position of the AnnualPerformance object in the list
+ * @return the AnnualPerformance object from a given position in the list 
+ */
    public AnnualPerformance getAnnualPerformance(int index)
    {
       return comments.get(index);
    }
    
    
-   //This methos was added by Sabin today
+   /**
+    * Gets the comment for a worker with given initials and name
+    * @param initials the worker's initials
+    * @param name the worker's name
+    * @return the comment for a worker with given initials and name
+    */
    public String getComment(String initials, String name) {
       for(int i = 0;i<comments.size();i++) {
          if(comments.get(i).matchComment(initials, name))
@@ -64,7 +76,11 @@ public class AnnualPerformanceList implements Serializable
       }
       return "nothing";
    }
-
+   /**
+    * Compares two AnnualPerformanceList  objects
+    * @param obj the object to compare with
+    * @return true if the given object is equal to this annual performance
+    */
    public boolean equals(Object obj)
    {
       if (!(obj instanceof AnnualPerformanceList))
@@ -75,7 +91,10 @@ public class AnnualPerformanceList implements Serializable
       return temp.comments.equals(comments);
 
    }
-
+   /**
+    * Gets a String representation of the AnnualPerformanceList.
+    * @return String representation of the AnnualPerformanceList
+    */
    public String toString()
    {
       String str = "";

@@ -18,7 +18,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 
-
+/**
+ * A GUI panel that allows for displaying,adding and modifying analyses
+ * @author Kresimir Bosnjak, Sabin Sirbu
+ * @version 1.0
+ */
 public class EditAnalysisPanel extends JPanel
 {
    private AnalysisFileAdapter adapter;
@@ -139,7 +143,7 @@ public class EditAnalysisPanel extends JPanel
 
    /*
     * Inner action listener class 
-    * @author Sabin Sirbu
+    * @author Sabin Sirbu, Kresimir Bosnjak
     * @version 1.0
     */
    private class MyButtonListener implements ActionListener
@@ -223,7 +227,11 @@ public class EditAnalysisPanel extends JPanel
          }
       }
    }
-   
+   /*
+    * Inner action listener class 
+    * @author Kresimir Bosnjak, Sabin Sirbu
+    * @version 1.0
+    */
    private class MyListSelectionListener implements ListSelectionListener 
    {
       public void valueChanged(ListSelectionEvent e) 

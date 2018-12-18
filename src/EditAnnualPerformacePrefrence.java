@@ -18,9 +18,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- * A GUI panel containing components for changing a students country.
- * @author Allan Henriksen
- * @version 2.0
+ * A GUI panel that allows adding the preferences to the workers
+ * @author Kresimir Bosnjak, Lucian Rafa
+ * @version 1.0
  */
 public class EditAnnualPerformacePrefrence extends JPanel
 {
@@ -51,10 +51,11 @@ public class EditAnnualPerformacePrefrence extends JPanel
    private JList<AnnualPerformance> annualPerformanceList;
    private DefaultListModel<AnnualPerformance> listModel;
    private JScrollPane allAnnualPerformanceScrollPane;
-
+   
    /**
     * Constructor initializing the GUI components
-    * @param adapter StudentFileAdapter object used for retrieving and storing student information
+    * @param adapter AnnualPerformanceAdapter object used for retrieving and storing annual performance information
+    * @param workeradapter WorkerFileAdapter object used for retrieving and storing worker information
     */
    public EditAnnualPerformacePrefrence (AnnualPerformanceAdapter adapter, WorkerFileAdapter workeradapter)
    {
@@ -128,7 +129,9 @@ public class EditAnnualPerformacePrefrence extends JPanel
    }
    
    
-   
+   /**
+    * Updates the workerBox JComboBox with information from the worker file  
+    */
    public void updateWorkerBox()
    {
       int currentIndex = workerBox.getSelectedIndex();
@@ -152,7 +155,7 @@ public class EditAnnualPerformacePrefrence extends JPanel
       }
    }
    /**
-    * Updates the studentList JList with information from the students file  
+    * Updates the AnnualPerformanceList JList with information from the annual performance file  
     */
   public void updateAnnualPerformanceList()
    {
@@ -181,8 +184,8 @@ public class EditAnnualPerformacePrefrence extends JPanel
 
    /*
     * Inner action listener class 
-    * @author Allan Henriksen
-    * @version 3.0
+    * @author Kresimir Bosnjak, Lucian Rafa
+    * @version 1.0
     */
    private class MyButtonListener implements ActionListener
    {
@@ -247,7 +250,11 @@ public class EditAnnualPerformacePrefrence extends JPanel
          }
       }
    }
-   
+   /*
+    * Inner action listener class 
+    * @author Kresimir Bosnjak, Lucian Rafa
+    * @version 1.0
+    */
    private class MyListSelectionListener implements ListSelectionListener 
    {
       public void valueChanged(ListSelectionEvent e) 

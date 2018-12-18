@@ -16,9 +16,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- * A GUI panel containing components for changing a students country.
- * @author Allan Henriksen
- * @version 2.0
+ * A GUI panel that allows for displaying,adding and modifying workers
+ * @author Kresimir Bosnjak, Lucian Rafa
+ * @version 1.0
  */
 public class ChangeInformationPanel extends JPanel
 {
@@ -49,7 +49,7 @@ public class ChangeInformationPanel extends JPanel
 
    /**
     * Constructor initializing the GUI components
-    * @param adapter StudentFileAdapter object used for retrieving and storing student information
+    * @param adapter WorkeFileAdapter object used for retrieving and storing worker information
     */
    public ChangeInformationPanel(WorkerFileAdapter adapter)
    {
@@ -125,7 +125,7 @@ public class ChangeInformationPanel extends JPanel
    
    
    /**
-    * Updates the studentList JList with information from the students file  
+    * Updates the WorkerList JList with information from the worker file  
     */
   public void updateWorkerList()
    {
@@ -158,8 +158,8 @@ public class ChangeInformationPanel extends JPanel
 
    /*
     * Inner action listener class 
-    * @author Allan Henriksen
-    * @version 3.0
+    * @author Kresimir Bosnjak
+    * @version 1.0
     */
    private class MyButtonListener implements ActionListener
    {
@@ -295,7 +295,11 @@ public class ChangeInformationPanel extends JPanel
          }
       }
    }
-   
+   /*
+    * Inner action listener class 
+    * @author Kresimir Bosnjak
+    * @version 1.0
+    */
    private class MyListSelectionListener implements ListSelectionListener 
    {
       public void valueChanged(ListSelectionEvent e) 

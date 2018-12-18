@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * A class containing the current Date
- * @author sabin
+ * @author Sabin Sirbu
  * @version 1.0
  */
 public class MyDate
@@ -16,7 +16,12 @@ public class MyDate
    private int month;
    private int year;
    private int week;
-   
+   /**
+    * Three-argument constructor.
+    * @param day the date's day
+    * @param month the date's month
+    * @param year the date's year
+    */
    public MyDate(int day, int month, int year) {
       this.day = day;
       this.month = month;
@@ -31,33 +36,51 @@ public class MyDate
       year = today().getYear();
    }
    /**
-    * Returns the 
-    * @return
+    * Gets the date's day 
+    * @return the date's day
     */
    public int getDay() {
       return day;
    }
-   
+   /**
+    * Sets the date's day
+    * @param day what the date's day will be set to
+    */
    public void setDay(int day) {
       this.day = day;
    }
-   
+   /**
+    * Gets the date's month
+    * @return the date's month
+    */
    public int getMonth() {
       return month;
    }
-   
+   /**
+    * Sets the date's month
+    * @param month what the date's month will be set to
+    */
    public void setMonth(int month) {
       this.month = month;
    }
-   
+   /**
+    * Gets the date's year
+    * @return the date's year
+    */
    public int getYear() {
       return year;
    }
-   
+   /**
+    * Sets the date's year
+    * @param year what the date's year will be set to
+    */
    public void setYear(int year) {
       this.year = year;
    }
-   
+   /**
+    * Gets the date's week
+    * @return the date's week
+    */
    public int getCurrentWeek() {
       Calendar calendar = new GregorianCalendar();
       Date currentDate = new Date();
@@ -65,11 +88,17 @@ public class MyDate
       week = calendar.get(Calendar.WEEK_OF_YEAR);
       return week;
    }
-   
+   /**
+    * Sets the date's week
+    * @param week the date's week will be set to
+    */
    public void setWeek(int week) {
       this.week = week;
    }
-   
+   /**
+    * Returns the today's date (day,month,year)
+    * @return Today's date
+    */
    public static MyDate today() {
       GregorianCalendar currentDate = new GregorianCalendar();
       int currentDay = currentDate.get(GregorianCalendar.DATE);
@@ -77,7 +106,10 @@ public class MyDate
       int currentYear = currentDate.get(GregorianCalendar.YEAR);
       return new MyDate(currentDay,currentMonth, currentYear);
    }
-   
+   /**
+    * Check's if the date's year is a leap year
+    * @return true if the date's year is a leap year
+    */
    public boolean isLeapYear() {
       if((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0)) { 
          return true;
@@ -86,7 +118,10 @@ public class MyDate
          return false;
       }
    }
-   
+   /**
+    * Shows how many days are in the given month
+    * @return amount of the days in the given month
+    */
    public int daysInMonth() {
       while(month>12) {
          month = month-12;
@@ -115,7 +150,10 @@ public class MyDate
         return 0;
       }
    }
-   
+   /**
+    * Gets the name of the given day of the week
+    * @return the name of the given day of the week
+    */
    public String dayOfWeek() {
       int month1 = month;
       int year1 = year;
@@ -154,23 +192,11 @@ public class MyDate
       }
       
    }
-   
-   public void nextDay() {
-      day++;
-      if(day > daysInMonth()){
-         while(day > daysInMonth()){
-            setDay(day - daysInMonth());
-            }
-         setMonth(month + 1);
-         }
-         if(month > 12) {
-            while(month > 12){
-               setMonth(month - 12);
-               }
-            setYear(year + 1);
-         }
-   }
-   
+  
+   /**
+    * Adds a specific number of days to the current date
+    * @param days is the amount of days that are added to the current date
+    */
    public void nextDays(int days) {
       day += days;
       if(day > daysInMonth()){
@@ -186,7 +212,10 @@ public class MyDate
             setYear(year + 1);
          } 
    }
-   
+   /**
+    * Sets the today's date to the next day's date
+    * @return the next day's date
+    */
    public MyDate nextDate() {
       day ++;
       if(day > daysInMonth()){
@@ -203,7 +232,10 @@ public class MyDate
          } 
          return new MyDate(day, month, year);
    }
-   
+   /**
+    * Returns a string representation of the date.
+    * @return a string representation of the date in the format: "day-month-year"
+    */
    public String toString() {
       return day + "-" + month + "-" + (year-2000);
    }
