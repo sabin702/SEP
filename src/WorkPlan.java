@@ -51,6 +51,7 @@ public class WorkPlan implements Serializable
    
    /**
     * Gets an analysis on a specific index.
+    * @param index index in the analyses list
     * @return an analysis at a specific index
     */
 

@@ -139,7 +139,7 @@ public class AnalysisFileAdapter
    
    /**
     * Uses the MyFileIO class to add an analysis
-    * @param analysisType the analysis' type of the new analysis
+    * @param analysistype the analysis' type of the new analysis
     * @param matrix the analysis' matrix of the new analysis
     */
    

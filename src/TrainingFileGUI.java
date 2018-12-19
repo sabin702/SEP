@@ -86,7 +86,7 @@ public class TrainingFileGUI extends JPanel
 
    /**
     * Constructor initializing the GUI components
-    * @param adapter AnalysisFileAdapter object used for retrieving analysis information
+    * @param analysisAdapter AnalysisFileAdapter object used for retrieving analysis information
     * @param workerAdapter object used for retrieving worker information
     * @param trainingAdapter object used for retrieving and storing training information
     */

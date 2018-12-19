@@ -88,7 +88,7 @@ public class WorkPlanAdapter
    
    /**
     * Uses the MyFileIO class to add a work plan for an employee at index
-    * @param i the position where a work plan will be added to the list of work plans
+    * @param index the position where a work plan will be added to the list of work plans
     * @param workPlan the work plan that is going to be added to the list
     */
    

@@ -16,7 +16,7 @@ public class WeeklyPlanList implements Serializable
    }
    /**
     * Adds an WeeklyPlan to the list
-    * @param index the weeklyPlan to add to the list
+    * @param weeklyPlan the weeklyPlan to add to the list
     */
    public void addWeeklyPlan(WeeklyPlan weeklyPlan) {
       weeklyPlans.add(weeklyPlan);
@@ -24,7 +24,7 @@ public class WeeklyPlanList implements Serializable
    /**
     * Adds the WeeklyPlan object to the given position
     * @param index position in the list
-    * @param weeklyplan 
+    * @param weeklyplan the weeklyPlan to add to the list
     */
    public void addWeeklyPlanByIndex(int index, WeeklyPlan weeklyplan)
    {
@@ -47,7 +47,7 @@ public class WeeklyPlanList implements Serializable
    /**
     * Gets the index of a given WeeklyPlan object
     * @param analysis the analysis of the WeeklyPlan object
-    * @param matrix the matrix of the WeeklyPlan object
+    * @param weekSize the weekSize of the WeeklyPlan object
     * @return the index of a given WeeklyPlan object
     */
    public int getIndex(Analysis analysis, String weekSize) 
